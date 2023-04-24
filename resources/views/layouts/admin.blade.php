@@ -38,7 +38,7 @@
 
 		<!--end::Page Vendors Styles -->
 		<link rel="shortcut icon" href="{{asset('metronic/assets/demo/default/media/img/logo/favicon.ico')}}" />
-       
+
         @yield('css')
 
     </head>
@@ -79,6 +79,7 @@
 					<!-- END: Subheader -->
                     <div class='m-content'>
 
+                    @include("layouts.shared.msg")
                     @yield('content')
 
                     </div>
@@ -119,7 +120,6 @@
 
 		<!--begin::Page Scripts -->
 		<script src="{{asset('metronic/assets/app/js/dashboard.js')}}" type="text/javascript"></script>
-
 		<!--end::Page Scripts -->
         @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 

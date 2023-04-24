@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Models\Currency;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CurrencyController extends Controller
 {
@@ -12,9 +14,24 @@ class CurrencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $q=$request->q;
+        $items=Currency::whereRaw("true");
+
+
+        if($q)
+        {
+            $items->whereRaw('(name like ? )',["%$q%"]);
+        }
+
+        $items=$items->paginate(10)
+        ->appends([
+            'q'=>$q
+        ]);
+
+        return view('admin.currency.index')->with("items",$items);
+
     }
 
     /**
@@ -24,7 +41,8 @@ class CurrencyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.currency.create');
+
     }
 
     /**
@@ -35,7 +53,11 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->all();
+        Currency::create($data);
+        Alert::success('Currency added successfully!', 'Success Message');
+        return redirect (route("currency.index"));
+
     }
 
     /**
@@ -57,7 +79,14 @@ class CurrencyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item= Currency::find($id);
+        if(!$item)
+        {
+            Alert::error('Invalid ID', 'Error Message');
+            return redirect(route("currency.index"));
+
+        }
+        return view("admin.currency.edit",compact('item'));
     }
 
     /**
@@ -69,7 +98,15 @@ class CurrencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item=Currency::find($id);
+        $data=$request->all();
+
+        $item->update($data);
+
+        Alert::success('Currency Updated Successfuly!', 'Success Message');
+
+        return redirect (route("currency.index"));
+
     }
 
     /**
@@ -80,6 +117,14 @@ class CurrencyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!$item) {
+            Alert::error('Invalid ID', 'Error Message');
+
+        }
+        $item->delete();
+        // return a success message
+        Alert::success('Currency Deleted Successfuly!', 'Success Message');
+        return redirect (route("currency.index"));
+
     }
 }

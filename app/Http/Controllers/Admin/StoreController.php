@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Store;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StoreController extends Controller
 {
@@ -12,9 +14,24 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $q=$request->q;
+        $items=Store::whereRaw("true");
+
+
+
+        if($q)
+        {
+            $items->whereRaw('(name like ? )',["%$q%"]);
+        }
+
+        $items=$items->paginate(10)
+        ->appends([
+            'q'=>$q,
+        ]);
+
+        return view('admin.store.index')->with("items",$items);
     }
 
     /**
@@ -24,7 +41,8 @@ class StoreController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.store.create');
+
     }
 
     /**
@@ -35,7 +53,10 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->all();
+        Store::create($data);
+        Alert::success('Store added successfully!', 'Success Message');
+        return redirect (route("store.index"));
     }
 
     /**
@@ -46,7 +67,14 @@ class StoreController extends Controller
      */
     public function show($id)
     {
-        //
+        $item= Store::find($id);
+        if(!$item)
+        {
+            Alert::error('Invalid ID', 'Error Message');
+            return redirect(route("store.index"));
+        }
+
+        return view("admin.store.show",compact('item'));
     }
 
     /**
@@ -57,7 +85,14 @@ class StoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item= Store::find($id);
+        if(!$item)
+        {
+            Alert::error('Invalid ID', 'Error Message');
+            return redirect(route("store.index"));
+
+        }
+        return view("admin.store.edit",compact('item'));
     }
 
     /**
@@ -69,7 +104,12 @@ class StoreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item=Store::find($id);
+        $data=$request->all();
+
+        $item->update($data);
+        Alert::success('Store Updated Successfuly!', 'Success Message');
+        return redirect (route("store.index"));
     }
 
     /**
@@ -80,6 +120,14 @@ class StoreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Store::find($id);
+        if (!$item) {
+            Alert::error('Invalid ID', 'Error Message');
+        }
+        $item->delete();
+        // return a success message
+        Alert::success('Store Deleted Successfuly!', 'Success Message');
+        return redirect (route("store.index"));
+
     }
 }

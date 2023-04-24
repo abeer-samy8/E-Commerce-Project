@@ -25,6 +25,6 @@ class CreateRequest extends FormRequest
     {
         return [
             'name'=>'required|unique:categories'
-                ];
+            ];
     }
 }

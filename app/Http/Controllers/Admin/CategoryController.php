@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Category\CreateRequest;
-use Illuminate\Http\Category\EditRequest;
+
 use App\Models\Category;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Http\Requests\Category\CreateRequest;
+use App\Http\Requests\Category\EditRequest;
 use Session;
 
 class CategoryController extends Controller
@@ -26,7 +26,7 @@ class CategoryController extends Controller
 
         if($active)
         {
-            $items->where("active",$active);
+            $items->where("active",$active); //"active" اسم العمود
         }
         if($active=="0")
         {
@@ -63,7 +63,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         $data=$request->all();
         Category::create($data);
@@ -81,7 +81,6 @@ class CategoryController extends Controller
     public function show($id)
     {
         $item= Category::find($id);
-      // dd($item);
         if(!$item)
         {
             Alert::error('Invalid ID', 'Error Message');
@@ -116,7 +115,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditRequest $request, $id)
     {
         $item=Category::find($id);
           $data=$request->all();
@@ -142,10 +141,18 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $item= Category::find($id);
+        $item = Category::find($id);
+        if (!$item) {
+            Alert::error('Invalid ID', 'Error Message');
+
+        }
         $item->delete();
+        // return a success message
         Alert::success('Category Deleted Successfuly!', 'Success Message');
         return redirect (route("category.index"));
 
     }
+
+
+
 }
