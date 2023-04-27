@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Store\CreateRequest;
+use App\Http\Requests\store\EditRequest;
+
 
 class StoreController extends Controller
 {
@@ -51,7 +54,7 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         $data=$request->all();
         Store::create($data);
@@ -70,7 +73,6 @@ class StoreController extends Controller
         $item= Store::find($id);
         if(!$item)
         {
-            Alert::error('Invalid ID', 'Error Message');
             return redirect(route("store.index"));
         }
 
@@ -102,7 +104,7 @@ class StoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditRequest $request, $id)
     {
         $item=Store::find($id);
         $data=$request->all();

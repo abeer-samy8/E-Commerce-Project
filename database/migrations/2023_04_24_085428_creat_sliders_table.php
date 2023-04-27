@@ -13,10 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('role_user', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->integer('role_id');
-            $table->integer('user_id');
+            $table->string('title');
+            $table->string('subtitle');
+            $table->string('image');
+            $table->string('url');
+            $table->string('button_text');
+            $table->boolean('active');
+            $table->boolean('new_window');
             $table->timestamps();
         });
     }
@@ -28,6 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('sliders');
+
     }
 };

@@ -24,30 +24,12 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'title'=>'required|unique:products',
-            // 'details' => 'nullable',
-            // 'main_image' => 'required',
-            // 'images' => 'required',
-            // 'category_id' => 'required',
-            // 'store_id' => 'required',
-            // 'currency_id' => 'required',
-            // 'regular_price' => 'required',
-            // 'sale_price' => 'nullable',
-            // 'active' => 'required',
-            // 'quantity' => 'required'
-
-
-        'title' => 'required|string',
-        'details' => 'nullable|string',
-        'main_image' => 'required|image',
-        'images' => 'nullable|string',
-        'category_id' => 'required|integer',
-        'store_id' => 'required|integer',
-        'currency_id' => 'required|integer',
-        'regular_price' => 'required|integer',
-        'sale_price' => 'nullable|integer',
-        'active' => 'required|boolean',
-        'quantity' => 'required|integer'
+            'title' => 'required|max:100',
+            'details' => 'required',
+            'image'=>'required|image',
+            'category_id'=>'required',
+            'regular_price'=>'required',
+            'quantity'=>'required'
 
         ];
     }

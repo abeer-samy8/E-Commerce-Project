@@ -112,8 +112,7 @@ class ProductController extends Controller
     {
         $product = product::find($id);
         if(!$product){
-            Alert::warning('The address is incorrect', 'Warning Message');
-
+            // Alert::warning('The address is incorrect', 'Warning Message');
             return redirect(route("product.index"));
         }
         return view("admin.product.show",compact('product'));

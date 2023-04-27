@@ -83,7 +83,6 @@ class CategoryController extends Controller
         $item= Category::find($id);
         if(!$item)
         {
-            Alert::error('Invalid ID', 'Error Message');
             return redirect(route("category.index"));
         }
 

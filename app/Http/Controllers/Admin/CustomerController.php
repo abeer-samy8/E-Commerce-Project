@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
+use Session;
+use App\Models\Customer;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class CustomerController extends Controller
 {
@@ -12,64 +16,30 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $q = $request->q;
+        $items = Customer::join("users","user_id","users.id")
+            ->where('email','like',"%$q%")
+            ->orWhere('name','like',"%$q%")
+            ->select("customers.*","users.name","users.email")
+            ->paginate(10)
+            ->appends(['q'=>$q]);
+        return view("admin.customer.index")->with('items',$items);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
-    }
+    $item = Customer::find($id);
+        if(!$item){
+            Alert::warning('Invalid ID', 'Warning Message');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+            return redirect(route("customer.index"));
+        }
+        // $users = User::get();
+        // return view("customer.show",compact('item','users'))->with("item",$item);
+        return view("admin.customer.show",compact('item'));
     }
 
     /**
@@ -80,6 +50,15 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $itemDB = Customer::find($id);
+        if($itemDB->orders->count()>0){
+            Alert::error('The customer cannot be deleted because he has orders.', 'Error Message');
+
+            return redirect(route("customer.index"));
+        }
+        $itemDB->delete();
+        Alert::success('Deleted Successfuly!', 'Success Message');
+
+        return redirect(route("customer.index"));
     }
 }

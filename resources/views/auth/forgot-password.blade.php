@@ -1,25 +1,25 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends("auth.auth-layout")
+@section('title','Forget Password')
+@section('main-title',' Forget password?')
+@section('sub-title','Forgot your password? No problem. Just tell us your email and we will send you a link to reset
+password and choose a new password.')
+
+@section('content')
+<form class="m-login__form m-form" method="POST" action="{{ route('password.email') }}">
+    @csrf
+
+    <div class="form-group m-form__group">
+        <input class="form-control m-input" type="email" placeholder="Enter Eamil" name="email" id="email"
+            value="{{old('email')}}" required autofocus>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <div class="m-login__form-action">
+        <button id="" type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">
+        Send a password reset link to the mail</button>&nbsp;&nbsp;
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+
+</form>
+@endsection

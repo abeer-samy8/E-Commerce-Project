@@ -6,6 +6,8 @@ use App\Models\Currency;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Currency\CreateRequest;
+use App\Http\Requests\Currency\EditRequest;
 
 class CurrencyController extends Controller
 {
@@ -51,7 +53,7 @@ class CurrencyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         $data=$request->all();
         Currency::create($data);
@@ -96,7 +98,7 @@ class CurrencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditRequest $request, $id)
     {
         $item=Currency::find($id);
         $data=$request->all();

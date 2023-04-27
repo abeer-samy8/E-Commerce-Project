@@ -23,18 +23,12 @@ class EditRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('product');
         return [
-        'title'=>'required|unique:products,title,' . $id . ',id',
-        'details' => 'nullable|string',
-        'images' => 'nullable|string',
-        'category_id' => 'required|integer',
-        'store_id' => 'required|integer',
-        'currency_id' => 'required|integer',
-        'regular_price' => 'required|integer',
-        'sale_price' => 'nullable|integer',
-        'active' => 'required|boolean',
-        'quantity' => 'required|integer'
+        'title' => 'required|max:50',
+        'details' => 'required',
+        'category_id'=>'required',
+        'regular_price'=>'required',
+         'quantity'=>'required'
         ];
     }
 }
