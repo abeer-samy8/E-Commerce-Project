@@ -17,6 +17,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group m-form__group row">
+                        <label class="col-lg-3 col-form-label">Description </label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control m-input" name="slug"
+                                value='{{ old("slug",$product->slug) }}'>
+                        </div>
+                    </div>
+
 
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Category </label>

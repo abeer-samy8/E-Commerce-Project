@@ -1,11 +1,11 @@
 @extends("layouts.admin")
-@section("title", "المستخدمين ")
+@section("title", "Users ")
 @section("title-side")
 <a href="{{asset('admin/user/create')}}" class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
     <span>
         <i class="la la-plus"></i>
         <span>
-            اضافة مستخدم جديد
+        Create New User
         </span>
     </span>
 </a>
@@ -40,9 +40,9 @@
                                         <span></span>
                                     </label>
                                 </th>
-                                <th>الاسم</th>
+                                <th>Name</th>
                                 <th>
-                                    الايميل</th>
+                                    Email</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -60,17 +60,17 @@
                                 <td width="15%">
                                     <a href='{{ route("users.links",$item->id) }}'
                                         class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
-                                        title="صلاحيات">
+                                        title="permission">
                                         <i class="la la-lock"></i>
                                     </a>
                                     <a href='{{ route("user.edit",$item->id) }}'
                                         class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
-                                        title="تعديل">
+                                        title="update">
                                         <i class="la la-edit"></i>
                                     </a>
                                     <a href='{{ route("users.delete",$item->id) }}'
                                         class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
-                                        aria-expanded="true" title="حذف" onclick='return confirm("Are you sure?")'>
+                                        aria-expanded="true" title="delete" onclick='return confirm("Are you sure?")'>
                                         <i class="flaticon-delete"></i>
                                     </a>
                                 </td>
@@ -80,7 +80,7 @@
                     </table>
                     {{ $items->links() }}
                     @else
-                    <div class='alert alert-info'><b>نأسف</b> !لا توجد نتائج </div>
+                    <div class='alert alert-info'><b>Sorry</b> No results!</div>
                     @endif
                 </div>
             </div>

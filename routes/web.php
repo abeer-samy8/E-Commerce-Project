@@ -11,9 +11,11 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\UserProfileController;
 use App\Http\Controllers\HomeController as FrontHomeController;
+use App\Http\Controllers\ProductsController as ProductsHomeController;
 
 
 
@@ -38,10 +40,18 @@ Route::get('/about-us',[FrontHomeController::class,'aboutUs']);
 Route::get('/stores',[FrontHomeController::class,'stores']);
 Route::get('/categories',[FrontHomeController::class,'categories']);
 Route::get('/sales',[FrontHomeController::class,'sales']);
+Route::get('/services', [FrontHomeController::class,'services']);
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
+Route::get('/products', [ProductsHomeController::class,'index']);
+Route::get('/products/cart', [CartController::class,'cart']);
+Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
+Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFromCart'])->name('remove-from-cart');
+Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");
+Route::get('/categories', [ProductsHomeController::class,'categories']);
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -78,6 +88,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::post("order/update-status/{id}",[OrderController::class,'updateStatus'])->name("order.updateStatus");
     Route::resource("order",OrderController::class);
     Route::get("order/{id}/delete",[OrderController::class,'destroy'])->name("order.delete");
+
+    Route::resource("service",ServiceController::class);
+    Route::get("service/{id}/delete",[ServiceController::class,'destroy'])->name ("service.delete");
+
 
     Route::resource("user",UserController::class);
     Route::get("user/{id}/delete",[UserController::class,'destroy'])->name("users.delete");

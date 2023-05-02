@@ -16,6 +16,72 @@
 		<link href="{{asset('furni/css/tiny-slider.css')}}" rel="stylesheet">
 		<link href="{{asset('furni/css/style.css')}}" rel="stylesheet">
 		<title>E-Store - @yield("title") </title>
+        <style>
+
+.ribbon {
+  width: 80px;
+  height: 32px;
+  line-height: 32px;
+  background: #4fbfa8;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 30px;
+  left: -15px;
+  text-align: center;
+}
+
+.ribbon.sale {
+background: #198754;
+}
+
+.ribbon.new {
+background: #ffc107;
+}
+
+.ribbon.new::after {
+content: '';
+border-top: 15px solid #1f7e9a;
+}
+
+.ribbon.sold {
+background: #f0ad4e;
+}
+
+.ribbon.sold::after {
+content: '';
+border-top: 15px solid #b06d0f;
+}
+
+.ribbon.gift {
+background: #5cb85c;
+}
+
+.ribbon.gift::after {
+content: '';
+border-top: 15px solid #2d672d;
+}
+
+.ribbon:nth-of-type(2) {
+top: 82px;
+}
+
+.ribbon::after {
+content: '';
+border-top: 15px solid #308372;
+border-left: 15px solid transparent;
+border-right: 0 solid transparent;
+position: absolute;
+bottom: -15px;
+left: 0;
+display: block;
+}
+</style>
+        @yield("css")
 	</head>
 
 	<body>
@@ -34,6 +100,8 @@
 		<script src="{{asset('furni/js/tiny-slider.js')}}"></script>
 		   <script src="{{asset('furni/js/custom.js')}}"></script>
         <!-- <script src="js/cartNumber.js"></script> -->
+        @yield("js")
+
 
 	</body>
 

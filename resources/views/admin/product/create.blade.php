@@ -15,13 +15,13 @@
                                 value='{{ old("title") }}'>
                         </div>
                     </div>
-                    <!-- <div class="form-group m-form__group row">
+                    <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Description </label>
                         <div class="col-lg-6">
                             <input type="text" class="form-control m-input" placeholder="Enter description " name="slug"
                                 value='{{ old("slug") }}'>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Category </label>

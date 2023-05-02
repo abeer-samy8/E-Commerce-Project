@@ -50,19 +50,11 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						<li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
-                        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 cartt">
-                            <li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
-                            <li>
-                                <a class="nav-link" href="cart.html">
-                                  <img src="images/cart.svg">
-                                  <span class="badge">0</span>
-                                </a>
-                              </li>
-                        </ul>
-                        </ul>
+						<li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+					</ul>
 				</div>
 			</div>
-
+				
 		</nav>
 		<!-- End Header/Navigation -->
 
@@ -76,149 +68,135 @@
 							</div>
 						</div>
 						<div class="col-lg-7">
-
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		<!-- End Hero Section -->
 
+		
 
-
-
-
-
-
-        <div class="row">
-            <div class="col">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProductModal" style="margin-top: 30px; margin-left: 120px;">
-            New Product
-          </button>
-        </div>
-          <div class="col">
-            <input type="text" id="search-input" class="form-control" placeholder="Filter by name or price ..." style="width: 550px; margin-top: 30px;">
-        </div>
-         </div>
-
-
-
-
-
-          <div class="modal fade" id="newProductModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="newProductModalLabel">New Product</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="title" class="form-label">Title</label>
-                      <input type="text" class="form-control" id="title" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="price" class="form-label">Price</label>
-                      <input type="number" class="form-control" id="price" name="price" required>
-
-                    </div>
-                    <div class="mb-3">
-                      <label for="description" class="form-label">Description</label>
-                      <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                      <label for="category" class="form-label">Category</label>
-                      <select class="form-select" id="category"  name="category" required>
-                        <option value="furniture">Furniture</option>
-                        <option value="computers">Computers</option>
-                        <option value="accessories">Accessories</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="count" class="form-label">Count</label>
-                      <input type="number" class="form-control" id="count" name="count" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="image">Image URL</label>
-                      <input type="text" class="form-control" id="image" name="image" required>
-                    </div>
-                    <div class="mb-3">
-                      <input type="submit" value="Add Product">
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-            <script>
-                // Load the products array from localStorage, or initialize it to an empty array
-                let product = JSON.parse(localStorage.getItem('products')) || [];
-
-                const form = document.querySelector('form');
-
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-
-                    const title = document.querySelector('#title').value;
-                    const price = document.querySelector('#price').value;
-                    const description = document.querySelector('#description').value;
-                    const category = document.querySelector('#category').value;
-                    const count = document.querySelector('#count').value;
-                    const image = document.querySelector('#image').value;
-
-                    // Generate a new ID for the product
-                    const id = products.length + 1;
-
-                    // Create a new product object
-                    const newProduct = {
-                        id,
-                        title,
-                        price,
-                        description,
-                        category,
-                        image,
-                        count: 0,
-                    };
-
-                    // Add the new product to the products array
-                    products.push(newProduct);
-
-                    // Save the updated products array to localStorage
-                    localStorage.setItem('products', JSON.stringify(products));
-
-                    // Clear the form inputs
-                    form.reset();
-                    const modal = bootstrap.Modal.getInstance(document.querySelector("#newProductModal"));
-                    modal.hide();
-                    console.log(products);
-                    // Display a success message to the user
-                    alert('Product added successfully!');
-                });
-
-
-                    </script>
-
-
-
-
-
-
-
-          <!-- Start products Section -->
-
-    <div class="untree_co-section product-section before-footer-section">
+		<div class="untree_co-section product-section before-footer-section">
 		    <div class="container">
-        <div id="product-container" class="row">
+		      	<div class="row">
+
+		      		<!-- Start Column 1 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-3.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+						
+					<!-- Start Column 2 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-1.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 2 -->
+
+					<!-- Start Column 3 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-2.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Kruzo Aero Chair</h3>
+							<strong class="product-price">$78.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div>
+					<!-- End Column 3 -->
+
+					<!-- Start Column 4 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-3.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Ergonomic Chair</h3>
+							<strong class="product-price">$43.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div>
+					<!-- End Column 4 -->
 
 
-        </div>
-       </div>
-    </div>
+					<!-- Start Column 1 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-3.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
 
-        <!-- End products Section -->
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+						
+					<!-- Start Column 2 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-1.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 2 -->
+
+					<!-- Start Column 3 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-2.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Kruzo Aero Chair</h3>
+							<strong class="product-price">$78.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div>
+					<!-- End Column 3 -->
+
+					<!-- Start Column 4 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							<img src="images/product-3.png" class="img-fluid product-thumbnail">
+							<h3 class="product-title">Ergonomic Chair</h3>
+							<strong class="product-price">$43.00</strong>
+
+							<span class="icon-cross">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div>
+					<!-- End Column 4 -->
+
+		      	</div>
+		    </div>
+		</div>
 
 
 		<!-- Start Footer Section -->
@@ -324,14 +302,12 @@
 
 			</div>
 		</footer>
-		<!-- End Footer Section -->
+		<!-- End Footer Section -->	
 
 
 		<script src="js/bootstrap.bundle.min.js"></script>
 		<script src="js/tiny-slider.js"></script>
 		<script src="js/custom.js"></script>
-        <!-- <script src="js/cartNumber.js"></script> -->
-
 	</body>
 
 </html>

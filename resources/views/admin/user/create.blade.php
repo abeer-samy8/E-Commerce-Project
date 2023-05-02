@@ -1,5 +1,5 @@
 @extends("layouts.admin")
-@section("title","اضافة مستخدم جديد")
+@section("title","Create New User")
 
 @section("content")
 <div class="m-portlet m-portlet--mobile">
@@ -9,25 +9,25 @@
             <div class="m-portlet__body">
                 <div class="m-form__section m-form__section--first">
                     <div class="form-group m-form__group row">
-                        <label class="col-lg-3 col-form-label">الاسم كاملاً</label>
+                        <label class="col-lg-3 col-form-label">Full Name</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control m-input" placeholder="ادخل اسمك كاملاً" name="name"
+                            <input type="text" class="form-control m-input" placeholder="Enter full name" name="name"
                                 value='{{ old("name") }}'>
-                            <span class="m-form__help">من فضلك ادخل اسمك </span>
+                            <span class="m-form__help">Enter full name  </span>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
-                        <label class="col-lg-3 col-form-label">الإيميل </label>
+                        <label class="col-lg-3 col-form-label">Email </label>
                         <div class="col-lg-6">
-                            <input type="email" class="form-control m-input" placeholder="ادخل ايميلك" name="email"
+                            <input type="email" class="form-control m-input" placeholder="Enter your email" name="email"
                                 value='{{ old("email") }}'>
-                            <span class="m-form__help">لن نشارك الايميل الخاص بك </span>
+                            <span class="m-form__help"> We will not share your email</span>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
-                        <label class="col-lg-3 col-form-label">كلمة السر </label>
+                        <label class="col-lg-3 col-form-label">Password </label>
                         <div class="col-lg-6">
-                            <input type="password" class="form-control m-input" placeholder="ادخل كلمة السر "
+                            <input type="password" class="form-control m-input" placeholder=" Enter password "
                                 name="password" value='{{ old("password") }}'>
                         </div>
                     </div>
@@ -38,8 +38,8 @@
                     <div class="row">
                         <div class="col-lg-3"></div>
                         <div class="col-lg-6">
-                            <button class="btn btn-primary" type="submit">إضافة</button>
-                            <a href='{{route("user.index")}}' class="btn btn-secondary">الغاء الامر</a>
+                            <button class="btn btn-primary" type="submit">Add</button>
+                            <a href='{{route("user.index")}}' class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
                 </div>

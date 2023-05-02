@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Http\Requests\User\CreateRequest;
 use App\Http\Requests\User\EditRequest;
 use Spatie\Permission\Models\Role;
-
 use Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class UserController extends Controller
@@ -16,9 +16,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-
         $q = $request->q;
-        
         $adminRole = Role::findByName('admin');
         $items = $adminRole->users()->whereRaw('(email like ? or name like ?)',["%$q%","%$q%"])
             ->paginate(10)
@@ -39,7 +37,8 @@ class UserController extends Controller
         //$requestData['images']=json_encode($imageArrayNames);
         $user = User::create($requestData);
         $user->assignRole('admin');
-        Session::flash("msg","s: تمت عملية الاضافة بنجاح");
+        Alert::success('User Added successfully!', 'Success Message');
+
         return redirect(route("user.create"));
     }
 
@@ -53,7 +52,8 @@ class UserController extends Controller
     {
         $item = User::find($id);
         if(!$item){
-            session()->flash("msg","e:عنوان المستخدم غير صحيح");
+            Alert::warning('Incorrect user address', 'Warning Message');
+
             return redirect(route("user.index"));
         }
         return view("admin.user.edit",compact('item'));
@@ -71,7 +71,7 @@ class UserController extends Controller
         }
         $user->update($requestData);
 
-        session()->flash("msg","s:تم تعديل بيانات المستخدم بنجاح");
+        Alert::success('User Updated successfully!', 'Success Message');
         return redirect(route("user.index"));
     }
 
@@ -80,14 +80,15 @@ class UserController extends Controller
     {
         $itemDB = User::find($id);
         $itemDB->delete();
-        session()->flash("msg","w:تم حذف المستخدم بنجاح");
+        Alert::success('User Deleted successfully!', 'Success Message');
         return redirect(route("user.index"));
     }
     public function links($id)
     {
         $item = User::find($id);
         if(!$item){
-            session()->flash("msg","e:عنوان المستخدم غير صحيح");
+            Alert::error('Incorrect user address', 'Error Message');
+
             return redirect(route("user.index"));
         }
         $links = \App\Models\Link::all();
@@ -105,7 +106,7 @@ class UserController extends Controller
                 ]);
             }
         }
-        session()->flash("msg","s:تم حفظ الصلاحيات بنجاح");
+        Alert::success('Permissions saved successfully!', 'Success Message');
         return redirect(route("user.index"));
     }
 }
