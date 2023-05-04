@@ -28,9 +28,9 @@
                     @if (Route::has('login'))
 
                     @auth
-                    <li class="nav-item @yield('profileActive')">
+                    <!-- <li class="nav-item @yield('profileActive')">
                         <a class="nav-link" href="{{asset('/member/profile')}}">{{trans('welcome')}} {{auth()->user()->name}}</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item @yield('profileActive')">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -63,13 +63,13 @@
 
             <a class="nav-link" href="{{asset('products/cart')}}">
             <img src="{{asset('furni/images/cart.svg')}}">
-            <!-- <?php
+             <?php
                     $cartItems = json_decode(request()->cookie('cart'),true)??[];
                     $count = count($cartItems);
                     if($count)
-                        echo "<span class='badge'>($count)</span>";
-                    ?> -->
-                <span class="badge">0</span>
+                        echo "<span class='badge'>$count</span>";
+                    ?>
+                <!-- <span class="badge">0</span> -->
                 </a>
             </li>
         </ul>

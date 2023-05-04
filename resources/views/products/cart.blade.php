@@ -34,7 +34,14 @@
 		<div class="untree_co-section before-footer-section">
             <div class="container">
               <div class="row mb-5">
-                <form class="col-md-12" method="post">
+                <form class="col-md-12" method="post" action="{{route('post-cart')}}">
+                @csrf
+                <?php
+                    $cartItems = json_decode(request()->cookie('cart'),true)??[];
+                ?>
+                <?php $total = 0 ?>
+                @if(count($cartItems))
+
                   <div class="site-blocks-table">
                     <table class="table">
                       <thead>
@@ -48,15 +55,20 @@
                         </tr>
                       </thead>
                       <tbody>
+                      @foreach($cartItems as $productId=>$quantity)
+                            <?php $product = \App\Models\Product::find($productId);
+                                $price = $product->sale_price??$product->regular_price;
+                                $total+=$price *$quantity;
+                            ?>
                         <tr>
                           <td class="product-thumbnail">
-                            <img src="images/product-1.png" alt="Image" class="img-fluid">
+                            <img src='{{asset("storage/assets/img/{$product->main_image}")}}' alt="Image" class="img-fluid">
                           </td>
                           <td class="product-name">
-                            <h2 class="h5 text-black">Product 1</h2>
+                            <h2 class="h5 text-black">{{$product->title}}</h2>
                           </td>
-                          <td>$49.00</td>
-                          <td>
+                          <td>${{$price}}</td>
+                          <!-- <td>
                             <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                               <div class="input-group-prepend">
                                 <button class="btn btn-outline-black decrease" type="button">&minus;</button>
@@ -67,37 +79,24 @@
                               </div>
                             </div>
 
-                          </td>
-                          <td>$49.00</td>
-                          <td><a href="#" class="btn btn-black btn-sm">X</a></td>
-                        </tr>
-
-                        <tr>
-                          <td class="product-thumbnail">
-                            <img src="images/product-2.png" alt="Image" class="img-fluid">
-                          </td>
-                          <td class="product-name">
-                            <h2 class="h5 text-black">Product 2</h2>
-                          </td>
-                          <td>$49.00</td>
+                          </td> -->
                           <td>
-                            <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
-                              <div class="input-group-prepend">
-                                <button class="btn btn-outline-black decrease" type="button">&minus;</button>
-                              </div>
-                              <input type="text" class="form-control text-center quantity-amount" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                              <div class="input-group-append">
-                                <button class="btn btn-outline-black increase" type="button">&plus;</button>
-                              </div>
-                            </div>
+                                    <input type='hidden' name='id[]' value='{{$product->id}}' />
+                                    <input name='quantity[]' type="number" value="{{$quantity}}" class="form-control">
+                            </td>
 
-                          </td>
-                          <td>$49.00</td>
-                          <td><a href="#" class="btn btn-black btn-sm">X</a></td>
+                          <td>${{$price*$quantity}}</td>
+                          <td><a href="{{route('remove-from-cart',$productId)}}" class="btn btn-black btn-sm" onclick='return confirm("Are You Sure? ")'>X</a></td>
                         </tr>
+                        @endforeach
+
+
                       </tbody>
                     </table>
                   </div>
+                  @else
+                  <div class='alert alert-warning'> لا يوجد منتجات في السلة</div>
+                @endif
                 </form>
               </div>
 
@@ -108,8 +107,9 @@
                       <button class="btn btn-black btn-sm btn-block">Update Cart</button>
                     </div>
                     <div class="col-md-6">
-                      <button class="btn btn-outline-black btn-sm btn-block">Continue Shopping</button>
+                    <a href="{{asset('/products')}}" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
                     </div>
+
                   </div>
                   <div class="row">
                     <div class="col-md-12">
@@ -132,20 +132,13 @@
                           <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                         </div>
                       </div>
-                      <div class="row mb-3">
-                        <div class="col-md-6">
-                          <span class="text-black">Subtotal</span>
-                        </div>
-                        <div class="col-md-6 text-right">
-                          <strong class="text-black">$230.00</strong>
-                        </div>
-                      </div>
+
                       <div class="row mb-5">
                         <div class="col-md-6">
                           <span class="text-black">Total</span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">$230.00</strong>
+                          <strong class="text-black">${{$total}}</strong>
                         </div>
                       </div>
 

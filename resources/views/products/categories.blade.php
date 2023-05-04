@@ -171,6 +171,7 @@ ul ul a.nav-link {
 @endsection
 
 @section('content')
+@include('products.ourJs')
 	<!-- Start Hero Section -->
     <div class="hero">
 				<div class="container">

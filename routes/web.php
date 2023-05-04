@@ -45,15 +45,17 @@ Route::get('/categories',[FrontHomeController::class,'categories']);
 Route::get('/sales',[FrontHomeController::class,'sales']);
 Route::get('/services', [FrontHomeController::class,'services']);
 
+Route::get('/products/cart', [CartController::class,'cart']);
+Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
+Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
+Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFromCart'])->name('remove-from-cart');
+
 
 Route::get('/products', [ProductsHomeController::class,'index']);
 Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");
 
 
-Route::get('/products/cart', [CartController::class,'cart']);
-Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
-Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
-Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFromCart'])->name('remove-from-cart');
+
 Route::get('/categories', [ProductsHomeController::class,'categories']);
 // Route::get('categories/{id}', [ProductsHomeController::class,'showCategory'])->name('category');
 // Route::get('/products/category/{categoryId}', 'ProductController@showCategory')->name('products.category');
