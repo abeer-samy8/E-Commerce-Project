@@ -12,8 +12,8 @@ use Spatie\Permission\Models\Role;
 use App\Mail\OrderDetails as MailOrderDetails;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
-// use Pusher\Pusher;
 
 class CartController extends Controller
 {
@@ -35,8 +35,7 @@ class CartController extends Controller
             $cartItemsJsonString = json_encode($cartItems);
             Cookie::queue('cart', $cartItemsJsonString, 60*24*14);
             return back();
-        }
-        else{
+        }else{
             if(!auth()->check()){
                 return redirect('login');
             }
@@ -55,14 +54,12 @@ class CartController extends Controller
                     'total_price'=>$totalPrice,
                     'total_items'=>count($request->id),
                     'name'=>$user->name,
-                    'user_id'=>$user->id,
                     'email'=>$user->email,
                     'phone'=>$user->customer->phone??'',
-                    'mobile'=>$user->customer->mobile??'',
-                    //'country_id'=>$user->customer->country_id??'',
                     'city'=>$user->customer->city??'',
                     'address'=>$user->customer->address??''
                 ]);
+                // dd($user);
                 for($i=0;$i<count($request->id);$i++){
                     $productId = $request->id[$i];
                     $quantity = $request->quantity[$i];
@@ -78,51 +75,19 @@ class CartController extends Controller
                     ]);
                 }
                 Cookie::queue('cart', '', 60*24*14);
-                //inform all users we have new order
-                $adminRole = Role::findByName('admin');
-                $users = $adminRole->users;
-                InformNewOrder::dispatch($users);
-                //Mail::to(auth()->user()->email)->send(new MailOrderDetails($order));
 
-                Mail::to(auth()->user()->email)->send(new OrderShipped($order));
 
-                //event(new \App\Events\OrderCreated(auth()->user()->name));
-                /*************PUSH NOTIFICATION USING PUSHER************ */
-                $options = array(
-                    'cluster' => env('PUSHER_APP_CLUSTER'),
-                    'encrypted' => true
-                );
-                $pusher = new Pusher(
-                    env('PUSHER_APP_KEY'),
-                    env('PUSHER_APP_SECRET'),
-                    env('PUSHER_APP_ID'),
-                    $options
-                );
-                $data['message'] = auth()->user()->name;
-                $pusher->trigger('order-created', 'App\\Events\\OrderCreated', $data);
-                /*************************************************** */
+                Alert::success('The order has been added successfully, we will contact you', 'Success Message');
 
-                session()->flash('msg','s: تمت اضافة الطلبية بنجاح سيتم التواصل معك');
                 return redirect('products/cart');
-            }
         }
     }
+}
+
     public function cart()
     {
-        //event(new App\Events\StatusLiked('Someone'));
 
-        // $options = array(
-        //     'cluster' => env('PUSHER_APP_CLUSTER'),
-        //     'encrypted' => true
-        // );
-        // $pusher = new Pusher(
-        //     env('PUSHER_APP_KEY'),
-        //     env('PUSHER_APP_SECRET'),
-        //     env('PUSHER_APP_ID'),
-        //     $options
-        // );
-        // $data['message'] = auth()->user()->name;
-        // $pusher->trigger('order-created', 'App\\Events\\OrderCreated', $data);
+
         return view('products.cart');
     }
 

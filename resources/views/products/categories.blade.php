@@ -171,7 +171,6 @@ ul ul a.nav-link {
 @endsection
 
 @section('content')
-@include('products.ourJs')
 	<!-- Start Hero Section -->
     <div class="hero">
 				<div class="container">
@@ -277,10 +276,13 @@ ul ul a.nav-link {
 
 
             </div>
+            <div >
+            {{ $products->links()}}
 
-            <div class="pages text-center" style=' padding: 15px; text-align: center;' >
-            {{ $products->links() }}
             </div>
+            <!-- <div class="pages text-center" style=' padding: 15px; text-align: center;' >
+            {{ $products->links() }}
+            </div> -->
             @else
             <div class='alert alert-info alert-dismissible fade show'>
             <div><b>Sorry! </b>There are no results to display</div>

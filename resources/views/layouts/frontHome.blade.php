@@ -100,6 +100,8 @@ display: block;
 		<script src="{{asset('furni/js/tiny-slider.js')}}"></script>
 		   <script src="{{asset('furni/js/custom.js')}}"></script>
         <!-- <script src="js/cartNumber.js"></script> -->
+        @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+
         @yield("js")
 
 
