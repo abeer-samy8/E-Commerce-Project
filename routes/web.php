@@ -14,6 +14,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\UserProfileController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CartController;
+
 use App\Http\Controllers\HomeController as FrontHomeController;
 use App\Http\Controllers\ProductsController as ProductsHomeController;
 
@@ -35,22 +38,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[FrontHomeController::class,'index']);
 Route::get('/page/{slug}',[FrontHomeController::class,'Page']);
-Route::get('/contact-us',[FrontHomeController::class,'contactUs']);
-Route::get('/about-us',[FrontHomeController::class,'aboutUs']);
+Route::get('/contact-us', [ContactController::class,'contact']);
+Route::post('/contact-us', [ContactController::class,'contactus']);
 Route::get('/stores',[FrontHomeController::class,'stores']);
 Route::get('/categories',[FrontHomeController::class,'categories']);
 Route::get('/sales',[FrontHomeController::class,'sales']);
 Route::get('/services', [FrontHomeController::class,'services']);
 
 
-Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
 Route::get('/products', [ProductsHomeController::class,'index']);
+Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");
+
+
 Route::get('/products/cart', [CartController::class,'cart']);
 Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
+Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
 Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFromCart'])->name('remove-from-cart');
-Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");
 Route::get('/categories', [ProductsHomeController::class,'categories']);
-
+// Route::get('categories/{id}', [ProductsHomeController::class,'showCategory'])->name('category');
+// Route::get('/products/category/{categoryId}', 'ProductController@showCategory')->name('products.category');
+// Route::get('/get-products-by-category/{categoryId}', 'ProductController@getProductsByCategory');
+// Route::get('/products/category/{id}', 'ProductController@getProductsByCategoryId')->name('get-products-by-category-id');
 
 
 Route::middleware('auth')->group(function () {
@@ -62,8 +70,8 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::prefix('admin')->middleware(['auth'])->group(function(){
-
+Route::prefix("admin")->middleware(['auth','role:admin'])->group(function(){
+    Route::get("/",[HomeController::class,'index']);
     Route::resource("category",CategoryController::class);
     Route::get("category/{id}/delete",[CategoryController::class,'destroy'])->name("category.delete");
 

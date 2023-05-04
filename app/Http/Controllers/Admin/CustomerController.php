@@ -7,6 +7,7 @@ use Session;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 
 
 class CustomerController extends Controller
@@ -26,6 +27,14 @@ class CustomerController extends Controller
             ->paginate(10)
             ->appends(['q'=>$q]);
         return view("admin.customer.index")->with('items',$items);
+
+        // $q = $request->q;
+        // $adminRole = Role::findByName('customer');
+        // $items = $adminRole->users()->whereRaw('(email like ? or name like ?)',["%$q%","%$q%"])
+        //     ->paginate(10)
+        //     ->appends(['q'=>$q]);
+
+        // return view("admin.customer.index")->with('items',$items);
 
     }
 

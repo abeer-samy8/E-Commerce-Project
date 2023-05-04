@@ -26,9 +26,10 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-        return redirect(asset('admin/'));
+        if(auth()->user()->hasRole('admin'))
+            return redirect(asset('admin/'));
+        return redirect(RouteServiceProvider::HOME);
     }
 
     /**
@@ -42,6 +43,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ModelHasRole;
+
 
 class RegisteredUserController extends Controller
 {
@@ -43,11 +45,16 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'status'=> 1
         ]);
-      //  $user->assignRole('customer');
+       // $user->assignRole('customer');
+        $role= new ModelHasRole;
+        $role->role_id=2;
+        $role->model_type='App\Models\User';
+        $role->model_id=$user->id;
+        $role->save();
         Auth::login($user);
 
         event(new Registered($user));
 
-        return redirect(route("admin/"));
+        return redirect(route("/admin"));
     }
 }

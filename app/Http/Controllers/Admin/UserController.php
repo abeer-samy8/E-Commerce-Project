@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ModelHasRole;
+
 use App\Http\Requests\User\CreateRequest;
 use App\Http\Requests\User\EditRequest;
 use Spatie\Permission\Models\Role;
@@ -34,10 +36,14 @@ class UserController extends Controller
     {
         $requestData = $request->all();
         $requestData['password'] = bcrypt($requestData['password']);
-        //$requestData['images']=json_encode($imageArrayNames);
         $user = User::create($requestData);
-        $user->assignRole('admin');
-        Alert::success('User Added successfully!', 'Success Message');
+      //  $user->assignRole('admin');
+       $role= new ModelHasRole;
+       $role->role_id=1;
+       $role->model_type='App\Models\User';
+       $role->model_id=$user->id;
+       $role->save();
+    Alert::success('User Added successfully!', 'Success Message');
 
         return redirect(route("user.create"));
     }

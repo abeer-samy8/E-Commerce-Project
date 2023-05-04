@@ -20,13 +20,55 @@
             <li><a class="nav-link" href="{{asset('contact-us')}}">Contact us</a></li>
             <li><a class="nav-link" href="{{asset('/page/about-us')}}">About us</a></li>
 
+
+
         </ul>
+<div class="form-inline mt-2 mt-md-0 mr-auto">
+                <ul class="navbar-nav">
+                    @if (Route::has('login'))
+
+                    @auth
+                    <li class="nav-item @yield('profileActive')">
+                        <a class="nav-link" href="{{asset('/member/profile')}}">{{trans('welcome')}} {{auth()->user()->name}}</a>
+                    </li>
+                    <li class="nav-item @yield('profileActive')">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a href="route('logout')"
+                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                class="nav-link">logout</a>
+
+                        </form>
+                    </li>
+                    @else
+                    <li class="nav-item @yield('profileActive')">
+                        <a class="nav-link" href="{{asset('login')}}">Login</a>
+                    </li>
+                    @if (Route::has('register'))
+                    <li class="nav-item @yield('profileActive')">
+                        <a class="nav-link" href="{{asset('register')}}">Register</a>
+                    </li>
+                    @endif
+                    @endauth
+
+                    @endif
+
+                </ul>
+            </div>
 
         <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 cartt">
-            <li><a class="nav-link" href="#"><img src="{{asset('furni/images/user.svg')}}"></a></li>
+            <li><img src="{{asset('furni/images/user.svg')}}"></li>
             <li>
-                <a class="nav-link" href="cart.html">
-                <img src="{{asset('furni/images/cart.svg')}}">
+
+
+            <a class="nav-link" href="{{asset('products/cart')}}">
+            <img src="{{asset('furni/images/cart.svg')}}">
+            <!-- <?php
+                    $cartItems = json_decode(request()->cookie('cart'),true)??[];
+                    $count = count($cartItems);
+                    if($count)
+                        echo "<span class='badge'>($count)</span>";
+                    ?> -->
                 <span class="badge">0</span>
                 </a>
             </li>
@@ -38,23 +80,4 @@
 </nav>
 <!-- End Header/Navigation -->
 
-<!-- Start Hero Section -->
-<div class="hero">
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-lg-5">
-                <div class="intro-excerpt">
-                    <h1>Modern Interior <span clsas="d-block">Design Studio</span></h1>
-                    <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                    <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="hero-img-wrap">
-                    <img src="{{asset('furni/images/couch.png')}}" class="img-fluid">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Hero Section -->
+
