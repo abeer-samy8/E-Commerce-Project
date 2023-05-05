@@ -193,17 +193,14 @@ ul ul a.nav-link {
 		<!-- End Hero Section -->
 
 
-
-
-
 <div id="content" class="untree_co-section product-section before-footer-section">
-        <div class="container">
-          <div class="row bar">
+    <div class="container">
+        <div class="row bar">
             <div class="col-md-3">
-              <!-- MENUS AND FILTERS-->
-              <div class="panel panel-default sidebar-menu">
+            <!-- MENUS AND FILTERS-->
+            <div class="panel panel-default sidebar-menu">
                 <div class="panel-heading">
-                  <h3 class="h4 panel-title">Categories</h3>
+                <h3 class="h4 panel-title">Categories</h3>
                 </div>
                 <div class="panel-body">
                 <ul class="nav nav-pills flex-column text-sm category-menu">
@@ -221,7 +218,6 @@ ul ul a.nav-link {
                             </a>
                         </label>
                         </div>
-
                     </li>
                     @endforeach
 
@@ -276,9 +272,8 @@ ul ul a.nav-link {
 
 
             </div>
-            <div >
+            <div>
             {{ $products->links()}}
-
             </div>
             <!-- <div class="pages text-center" style=' padding: 15px; text-align: center;' >
             {{ $products->links() }}
@@ -304,8 +299,6 @@ ul ul a.nav-link {
 @endsection
 @section('js')
 <script>
-
-
 
 </script>
 @endsection

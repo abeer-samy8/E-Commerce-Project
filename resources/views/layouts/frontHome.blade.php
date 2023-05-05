@@ -99,6 +99,8 @@ display: block;
 		<script src="{{asset('furni/js/bootstrap.bundle.min.js')}}"></script>
 		<script src="{{asset('furni/js/tiny-slider.js')}}"></script>
 		   <script src="{{asset('furni/js/custom.js')}}"></script>
+           <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+
         <!-- <script src="js/cartNumber.js"></script> -->
         @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 

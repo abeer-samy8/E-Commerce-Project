@@ -99,8 +99,8 @@
                     </tbody>
                     </table>
                 </div>
-            <div class="row">
-                    <div class="col-md-3 mb-3 mb-md-0">
+            <div class="row" style='padding:20px'>
+                    <div class="col-md-3 mb-3 mb-md-0" >
                     <button type="submit" value='1' name='refresh' class="btn btn-black btn-sm btn-block">Update Cart</button>
                     </div>
                     <div class="col-md-3">

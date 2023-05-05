@@ -27,14 +27,9 @@ class CustomerController extends Controller
             ->paginate(10)
             ->appends(['q'=>$q]);
         return view("admin.customer.index")->with('items',$items);
+        
 
-        // $q = $request->q;
-        // $adminRole = Role::findByName('customer');
-        // $items = $adminRole->users()->whereRaw('(email like ? or name like ?)',["%$q%","%$q%"])
-        //     ->paginate(10)
-        //     ->appends(['q'=>$q]);
 
-        // return view("admin.customer.index")->with('items',$items);
 
     }
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\UserProfileController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CartController;
 
@@ -44,6 +45,7 @@ Route::get('/stores',[FrontHomeController::class,'stores']);
 Route::get('/categories',[FrontHomeController::class,'categories']);
 Route::get('/sales',[FrontHomeController::class,'sales']);
 Route::get('/services', [FrontHomeController::class,'services']);
+Route::get('/about-us', [FrontHomeController::class,'aboutUs']);
 
 Route::get('/products/cart', [CartController::class,'cart']);
 Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
@@ -57,11 +59,6 @@ Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name(
 
 
 Route::get('/categories', [ProductsHomeController::class,'categories']);
-// Route::get('categories/{id}', [ProductsHomeController::class,'showCategory'])->name('category');
-// Route::get('/products/category/{categoryId}', 'ProductController@showCategory')->name('products.category');
-// Route::get('/get-products-by-category/{categoryId}', 'ProductController@getProductsByCategory');
-// Route::get('/products/category/{id}', 'ProductController@getProductsByCategoryId')->name('get-products-by-category-id');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -88,6 +85,9 @@ Route::prefix("admin")->middleware(['auth','role:admin'])->group(function(){
 
     Route::resource("static-page",StaticPageController::class);
     Route::get("static-page/{id}/delete",[StaticPageController::class,'destroy'])->name("static-page.delete");
+
+    Route::resource("testimonial",TestimonialController::class);
+    Route::get("testimonial/{id}/delete",[TestimonialController::class,'destroy'])->name("testimonial.delete");
 
     Route::resource("slider",SliderController::class);
     Route::get("slider/{id}/delete",[SliderController::class,'destroy'])->name("slider.delete");

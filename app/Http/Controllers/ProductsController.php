@@ -51,6 +51,8 @@ class ProductsController extends Controller
     return view("products.categories", compact('products', 'categories'));
 }
 
+
+
 // public function getProductsByCategoryId($id)
 // {
 //     $products = Product::where('category_id', $id)->get();

@@ -1,8 +1,8 @@
 @extends("layouts.admin")
-@section("title","Static Page management")
+@section("title","Testimonial management")
 
 @section("title-side")
-<a href="{{asset('admin/static-page/create')}}"
+<a href="{{asset('admin/testimonial/create')}}"
     class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air">
     <span>
         <i class="la la-plus"></i>
@@ -29,11 +29,11 @@
                                         <span></span>
                                     </label>
                                 </th>
-                                <th>Title</th>
-                                <th>Short Description</th>
-                                <!-- <th>Long Description </th> -->
-                                <th>Status</th>
+                                <th>name</th>
+                                <th>Subject</th>
                                 <th>Image</th>
+                                <th>Role</th>
+                                <th>Status</th>
                                 <th width='15%'>Options</th>
                             </tr>
                         </thead>
@@ -46,22 +46,22 @@
                                         <span></span>
                                     </label>
                                 </td>
-                                <td>{{ $item->title }}</td>
-                                <td>{{ $item->slug }}</td>
-                                <td>{{ $item->active }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->subject }}</td>
                                 <td>
                                     <img style="width: 50px;" src="{{ asset('storage/images/'.$item->image)}}" />
                                 </td>
+                                <td>{{ $item->role }}</td>
+                                <td>{{ $item->active }}</td>
+
                                 <td width="15%">
+
                                     <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"
-                                        href="{{route('static-page.show',$item->id)}}" title="show"><i
-                                            class="la la-eye"></i> </a>
-                                    <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"
-                                        href="{{route('static-page.edit',$item->id)}}" title="edit"><i
+                                        href="{{route('testimonial.edit',$item->id)}}" title="edit"><i
                                             class="la la-edit"></i> </a>
                                     <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"
-                                        href="{{route('static-page.delete',$item->id)}}"
-                                        onclick="return confirm('Are you sure to delete {{$item->title}} ?')" title="delete"><i
+                                        href="{{route('testimonial.delete',$item->id)}}"
+                                        onclick="return confirm('Are you sure to delete {{$item->name}} ?')" title="delete"><i
                                             class="la la-remove"></i> </a>
                                 </td>
         </tr>
