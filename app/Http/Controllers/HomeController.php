@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Service;
 use App\Models\Testimonial;
+use App\Models\Product;
 
 
 
@@ -13,8 +14,13 @@ class HomeController extends Controller
     function index(){
 
         $homeSliders = Slider::where('active','1')->orderBy('id','desc')->take(4)->get();
+        $products = Product::where('active','1')->orderBy('id','desc')->take(3)->get();
+        $services = Service::where('active','1')->orderBy('id','desc')->take(4)->get();
+        $testimonial = Testimonial::where('active','1')->orderBy('id','desc')->take(3)->get();
 
-        return view('home.index',compact('homeSliders'));
+
+
+        return view('home.index',compact('homeSliders','products','services','testimonial'));
     }
 
     public function services()
@@ -25,8 +31,8 @@ class HomeController extends Controller
 
     }public function aboutUs()
     {
-        $services = Service::where('active','1')->orderBy('id','desc')->paginate(4);
-        $testimonial = Testimonial::where('active','1')->orderBy('id','desc')->paginate(9);
+        $services = Service::where('active','1')->orderBy('id','desc')->take(4)->get();
+        $testimonial = Testimonial::where('active','1')->orderBy('id','desc')->take(3)->get();
         return view('home.about-us',compact('services','testimonial'));
     }
 
