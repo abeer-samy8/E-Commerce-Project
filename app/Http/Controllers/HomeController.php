@@ -26,7 +26,11 @@ class HomeController extends Controller
     public function services()
     {
         $services = Service::where('active','1')->orderBy('id','desc')->paginate(12);
-        return view('home.services',compact('services'));
+        $products = Product::where('active','1')->orderBy('id','desc')->take(3)->get();
+        $testimonial = Testimonial::where('active','1')->orderBy('id','desc')->take(3)->get();
+
+
+        return view('home.services',compact('services','products','testimonial'));
 
 
     }public function aboutUs()
