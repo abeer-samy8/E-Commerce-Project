@@ -21,6 +21,14 @@ class ProductsController extends Controller
         return view("products.index",compact('products'));
     }
 
+
+    public function categoryProducts($id){
+        $products = Product::where('category_id',$id)->get();
+        return $products;
+
+    }
+
+
     public function categories(Request $request)
 {
     $q = $request->q;
@@ -32,12 +40,6 @@ class ProductsController extends Controller
     if ($categoryId) {
         $query->where('category_id', $categoryId);
     }
-    if ($request->ajax()) {
-        $category = Category::find($request->category);
-        $categoryProducts = $category ? $category->products : [];
-
-        return view('products.category-products', compact('categoryProducts'))->render();
-    }
 
     $products = $query->paginate(6)
         ->appends([
@@ -47,36 +49,12 @@ class ProductsController extends Controller
 
     $categories = Category::with('products')->get();
 
-
     return view("products.categories", compact('products', 'categories'));
 }
 
 
 
-// public function getProductsByCategoryId($id)
-// {
-//     $products = Product::where('category_id', $id)->get();
-//     return response()->json($products);
-// }
 
-
-
-// public function showCategory($categoryId)
-// {
-//     $category = Category::find($categoryId);
-//     $products = $category->products()->paginate(6);
-
-//     return view("products.category", compact('category','products'));
-// }
-
-public function getProductsByCategory($categoryId)
-{
-    $products = Product::where('category_id', $categoryId)->paginate(6);
-    return response()->json([
-        'products' => $products->toArray(),
-        'pagination' => (string) $products->links()
-    ]);
-}
 
 
 // public function categories(Request $request)

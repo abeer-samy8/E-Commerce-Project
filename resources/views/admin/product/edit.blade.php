@@ -57,7 +57,7 @@
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Currency </label>
                         <div class="col-lg-6">
-                            <select class="form-control chosen-rtl select" name='currency_id' id='currency_id'>
+                            <select class="form-control chosen-rtl select2" name='currency_id' id='currency_id'>
                                 <option selected>-Choose Currency- </option>
                                 @foreach($currencies as $currency)
                                 <option {{old('currency_id',$product->currency_id)==$currency->id?'selected':''}}
@@ -136,4 +136,5 @@
 @endsection
 
 @section("js")
+
 @endsection

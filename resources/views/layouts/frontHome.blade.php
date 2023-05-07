@@ -94,15 +94,43 @@ display: block;
 
         @include("layouts.home.footer")
 		<!-- End Footer Section -->
+        <script
+  src="https://code.jquery.com/jquery-3.6.4.min.js"
+  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+  crossorigin="anonymous"></script>
 
+        <!-- <script type="text/javascript" src="{{asset('furni/js/jquery-3.5.1.min.js')}}"></script> -->
 
+        <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script> -->
 		<script src="{{asset('furni/js/bootstrap.bundle.min.js')}}"></script>
 		<script src="{{asset('furni/js/tiny-slider.js')}}"></script>
-		   <script src="{{asset('furni/js/custom.js')}}"></script>
-           <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+		<script src="{{asset('furni/js/custom.js')}}"></script>
 
         <!-- <script src="js/cartNumber.js"></script> -->
         @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+
+        <script>
+            function addSubscriber(){
+
+                var subscriber_email = $("#subscriber_email").val();
+                var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if(regex.test(subscriber_email)==false){
+                    alert("Please enter valid Email!");
+                    return false;
+                }
+                $.ajax({
+                    type:'post',
+                    url:'/add-subscriber-email',
+                    data:{subscriber_email:subscriber_email},
+                    success:function(resp){
+                        alert(resp);
+                    },error:function(){
+                        alert("Error");
+                    }
+                });
+            }
+        </script>
+
 
         @yield("js")
 

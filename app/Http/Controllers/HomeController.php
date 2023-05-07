@@ -18,8 +18,6 @@ class HomeController extends Controller
         $services = Service::where('active','1')->orderBy('id','desc')->take(4)->get();
         $testimonial = Testimonial::where('active','1')->orderBy('id','desc')->take(3)->get();
 
-
-
         return view('home.index',compact('homeSliders','products','services','testimonial'));
     }
 
@@ -28,7 +26,6 @@ class HomeController extends Controller
         $services = Service::where('active','1')->orderBy('id','desc')->paginate(12);
         $products = Product::where('active','1')->orderBy('id','desc')->take(3)->get();
         $testimonial = Testimonial::where('active','1')->orderBy('id','desc')->take(3)->get();
-
 
         return view('home.services',compact('services','products','testimonial'));
 

@@ -27,6 +27,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function activate($id){
+        //sleep(3);
+        $item = Product::find($id);
+        if($item){
+            $item->active=!$item->active;
+            $item->save();
+            return response()->json(['status'=>1,'msg'=>'updated successfully']);
+        }
+        return response()->json(['status'=>0,'msg'=>'invalid id']);
+    }
+
+    
     public function index(Request $request)
     {
         $q = $request->q;

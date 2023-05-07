@@ -28,11 +28,9 @@
                 var cb = $(this);
                 $(this).hide();
                 $(this).next().show();
-                //var checked= $(this).is(":checked");
-                //var checked= $(this).prop("checked");
-                //alert("ID: "+id+", Checked: "+checked);
+
                 $.get('/admin/product/'+id+'/activate',function(){
-                    //alert("Updated successfully")
+                    // alert("Updated successfully")
                     $(cb).next().hide();
                     $(cb).show();
                 })

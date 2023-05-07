@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\UserProfileController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\NewsletterController;
+
 
 use App\Http\Controllers\HomeController as FrontHomeController;
 use App\Http\Controllers\ProductsController as ProductsHomeController;
@@ -55,10 +57,13 @@ Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFrom
 
 Route::get('/products', [ProductsHomeController::class,'index']);
 Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");
-
-
-
 Route::get('/categories', [ProductsHomeController::class,'categories']);
+Route::get('/category-products/{id}', [ProductsHomeController::class,'categoryProducts']);
+
+//Add subscriber email
+// Route::get('/add-subscriber-email', [NewsletterController::class,'addSubscriber']);
+Route::post('/add-subscriber-email','NewsletterController@addSubscriber');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -74,6 +79,7 @@ Route::prefix("admin")->middleware(['auth','role:admin'])->group(function(){
     Route::resource("category",CategoryController::class);
     Route::get("category/{id}/delete",[CategoryController::class,'destroy'])->name("category.delete");
 
+    Route::get("product/{id}/activate",[ProductController::class,'activate'])->name("products.activate");
     Route::resource("product",ProductController::class);
     Route::get("product/{id}/delete",[ProductController::class,'destroy'])->name("product.delete");
 

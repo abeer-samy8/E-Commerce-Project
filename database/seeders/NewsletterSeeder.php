@@ -15,11 +15,15 @@ class NewsletterSeeder extends Seeder
      */
     public function run()
     {
-        $subscriberRecords = [
-            ['id'=>1, 'email'=>'abeer@gmail.com','status'=>1],
-            ['id'=>1, 'email'=>'abeer@gmail.com','status'=>1]
 
-        ];
-        Newsletter::insert($subscriberRecords);
+
+        Newsletter::create([
+            'email' => 'abeer@gmail.com',
+            'status'=>1
+        ]);
+        Newsletter::create([
+            'email' => 'abeersami611@gmail.com',
+            'status'=>1
+        ]);
     }
 }

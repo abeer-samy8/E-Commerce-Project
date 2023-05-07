@@ -26,7 +26,7 @@
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Category </label>
                         <div class="col-lg-6">
-                            <select class="form-control chosen-rtl select" name='category_id' id='category_id'>
+                            <select class="form-control chosen-trl select2" name='category_id' id='category_id'>
                                 <option selected>-Choose Category- </option>
                                 @foreach($categories as $category)
                                 <option {{old('category_id')==$category->id?'selected':''}} value='{{$category->id}}'>
@@ -39,7 +39,7 @@
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Store </label>
                         <div class="col-lg-6">
-                            <select class="form-control chosen-rtl select" name='store_id' id='store_id'>
+                            <select class="form-control chosen-trl select2" name='store_id' id='store_id'>
                                 <option selected>-Choose Store- </option>
                                 @foreach($stores as $store)
                                 <option {{old('store_id')==$store->id?'selected':''}} value='{{$store->id}}'>
@@ -52,7 +52,7 @@
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Currency </label>
                         <div class="col-lg-6">
-                            <select class="form-control chosen-rtl select" name='currency_id' id='currency_id'>
+                            <select class="form-control chosen-trl select2" name='currency_id' id='currency_id'>
                                 <option selected>-Choose Currency- </option>
                                 @foreach($currencies as $currency)
                                 <option {{old('currency_id')==$currency->id?'selected':''}} value='{{$currency->id}}'>
@@ -133,13 +133,13 @@
 @endsection
 
 @section("css")
-<link rel="stylesheet" href="{{asset('chosen/chosen.css')}}">
+<!-- <link rel="stylesheet" href="{{asset('chosen/chosen.css')}}">
 @endsection
 @section("js")
 <script src="{{asset('chosen/chosen.jquery.js')}}" type="text/javascript"></script>
 <script>
     $(function(){
         $(".select").chosen();
-    })
-</script>
+    }) -->
+<!-- </script> -->
 @endsection

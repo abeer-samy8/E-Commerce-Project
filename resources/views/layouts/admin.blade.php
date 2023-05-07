@@ -122,7 +122,9 @@
 		<script src="{{asset('metronic/assets/app/js/dashboard.js')}}" type="text/javascript"></script>
 		<!--end::Page Scripts -->
         @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
-
+        <script>
+        $(".select2").select2();
+        </script>
         @yield('js')
 
 	</body>

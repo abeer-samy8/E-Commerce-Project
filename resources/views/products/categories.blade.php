@@ -211,17 +211,16 @@ ul ul a.nav-link {
                         <!-- <input type="checkbox" id="category_{{ $category->id }}" name="category[]" value="{{ $category->id }}" {{ in_array($category->id, request()->get('category') ?? []) ? 'checked' : '' }}> -->
                         <label for="category_{{ $category->id }}" class="w-100">
                             <!-- category link with name and product count -->
-                            <a href="{{ asset('products?category[]=' . $category->id) }}" class="nav-link d-flex align-items-center justify-content-between">
-                            <!-- <a href="#" class="nav-link d-flex align-items-center justify-content-between" onclick="getProductsByCategory('{{ $category->id }}', '{{ csrf_token() }}')"> -->
+                            <div class="nav-link d-flex align-items-center justify-content-between" id='category' name='category' data-category-id="{{ $category->id }}">
                             <span style='color: #198754 !important;'>{{ $category->name }}</span>
                             <span class="badge badge-secondary">{{ $category->products()->count() }}</span>
-                            </a>
+                            </div>
                         </label>
                         </div>
                     </li>
                     @endforeach
 
-                    <li class="pt-3 mt-2 search-top-line">
+                    <!-- <li class="pt-3 mt-2 search-top-line">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input name='q' id='q' value='{{request()->q}}' autofocus type="text"
@@ -234,8 +233,7 @@ ul ul a.nav-link {
                                             </div>
                                         </div>
 
-                                    </li>
-
+                    </li> -->
                 </ul>
                 </div>
             </div>
@@ -245,7 +243,7 @@ ul ul a.nav-link {
             <div class="col-md-9">
             <p class="text-muted lead">In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide. Pellentesque habitant morbi tristique senectus et netuss.</p>
             @if($products->count()>0)
-            <div class="row products products-big" id="products-container">
+            <div class="row products products-big" id='products' name='products'>
                 @foreach($products as $product)
                 <div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">
 						<a class="product-item" href="{{route('add-to-cart',$product->id)}}">
@@ -275,9 +273,7 @@ ul ul a.nav-link {
             <div>
             {{ $products->links()}}
             </div>
-            <!-- <div class="pages text-center" style=' padding: 15px; text-align: center;' >
-            {{ $products->links() }}
-            </div> -->
+
             @else
             <div class='alert alert-info alert-dismissible fade show'>
             <div><b>Sorry! </b>There are no results to display</div>
@@ -298,7 +294,41 @@ ul ul a.nav-link {
 </div>
 @endsection
 @section('js')
+
 <script>
+$(function(){
+    $(".category-menu li").click(function(){
+        var categoryId = $(this).find(".nav-link").data("category-id");
+        $.get("/category-products/"+categoryId,function(json){
+            $("#products").html(""); // clear existing products
+            $(json).each(function(){
+                var html = '<div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">';
+                html += '<a class="product-item" href="{{route('add-to-cart',$product->id)}}">';
+                html += '<img src="{{asset("storage/assets/img/")}}/'+this.main_image+'" class="img-fluid product-thumbnail">';
+                html += '<h3 class="product-title">'+this.title+'</h3>';
+                if (this.sale_price == '') {
+                    html += '<strong class="product-price">'+this.regular_price+'$</strong>';
+                } else {
+                    html += '<p>';
+                    html += '<del style = " color: #888888; display: inline-block; margin-right: 10px;}">'+this.regular_price+'$</del>';
+                    html += '<strong class="product-price">'+this.sale_price+'$</strong>';
+                    html += '</p>';
+                    html += '<div class="ribbon-holder">';
+                    html += '<div class="ribbon sale">SALE</div>';
+                    html += '<div class="ribbon new">NEW</div>';
+                    html += '</div>';
+                }
+                html += '<span class="icon-cross">';
+                html += '<img src="{{asset('furni/images/cross.svg')}}" class="img-fluid" >';
+                html += '</span>';
+                html += '</a>';
+                html += '</div>';
+                $("#products").append(html);
+            });
+        });
+    });
+});
 
 </script>
+
 @endsection

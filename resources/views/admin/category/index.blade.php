@@ -24,7 +24,7 @@
                         placeholder='Enter Search Keyword Here'/>
                 </div>
                 <div class='col-sm-3'>
-                    <select name="active" class='form-control'>
+                    <select name="active" class='form-control select2'>
                         <option value=''>Status</option>
                         <option value='1'>Active</option>
                         <option value='0'>Inactive</option>

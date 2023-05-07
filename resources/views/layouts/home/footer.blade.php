@@ -6,14 +6,15 @@
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="{{asset('furni/images/envelope-outline.svg')}}" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
 							<form action="#" class="row g-3">
-								<div class="col-auto">
+								<!-- <div class="col-auto">
 									<input type="text" class="form-control" placeholder="Enter your name">
+								</div> -->
+								<div class="col-auto">
+									<input type="email" class="form-control" name='subscriber_email'
+                                    id='subscriber_email' placeholder="Enter your email" required >
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
-								</div>
-								<div class="col-auto">
-									<button class="btn btn-primary">
+									<button class="btn btn-primary" onclick="addSubscriber();">
 										<span class="fa fa-paper-plane"></span>
 									</button>
 								</div>
