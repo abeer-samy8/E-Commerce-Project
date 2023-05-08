@@ -211,16 +211,16 @@ ul ul a.nav-link {
                         <!-- <input type="checkbox" id="category_{{ $category->id }}" name="category[]" value="{{ $category->id }}" {{ in_array($category->id, request()->get('category') ?? []) ? 'checked' : '' }}> -->
                         <label for="category_{{ $category->id }}" class="w-100">
                             <!-- category link with name and product count -->
-                            <div class="nav-link d-flex align-items-center justify-content-between" id='category' name='category' data-category-id="{{ $category->id }}">
+                            <a class="nav-link d-flex align-items-center justify-content-between" id='category' name='category' data-category-id="{{ $category->id }}">
                             <span style='color: #198754 !important;'>{{ $category->name }}</span>
                             <span class="badge badge-secondary">{{ $category->products()->count() }}</span>
-                            </div>
+                            </a>
                         </label>
                         </div>
                     </li>
                     @endforeach
 
-                    <!-- <li class="pt-3 mt-2 search-top-line">
+                    <li class="pt-3 mt-2 search-top-line">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input name='q' id='q' value='{{request()->q}}' autofocus type="text"
@@ -233,7 +233,7 @@ ul ul a.nav-link {
                                             </div>
                                         </div>
 
-                    </li> -->
+                    </li>
                 </ul>
                 </div>
             </div>
@@ -267,9 +267,7 @@ ul ul a.nav-link {
 						</a>
 				</div>
                 @endforeach
-
-
-            </div>
+          </div>
             <div>
             {{ $products->links()}}
             </div>
