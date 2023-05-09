@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\category;
+use App\Models\BillingDetails;
 
 class ProductsController extends Controller
 {
@@ -88,5 +89,8 @@ class ProductsController extends Controller
         }
         return view('products.details',compact('product'));
     }
-}
 
+
+
+
+}

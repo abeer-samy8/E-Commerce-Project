@@ -1,6 +1,6 @@
 @extends("layouts.frontHome")
 
-@section("title","الصفحة الرئيسية")
+@section("title","Categories")
 
 @section("css")
 <!-- theme stylesheet-->
@@ -267,7 +267,7 @@ ul ul a.nav-link {
 						</a>
 				</div>
                 @endforeach
-          </div>
+        </div>
             <div>
             {{ $products->links()}}
             </div>
@@ -292,7 +292,7 @@ ul ul a.nav-link {
 </div>
 @endsection
 @section('js')
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(function(){
     $(".category-menu li").click(function(){

@@ -53,12 +53,22 @@ Route::get('/products/cart', [CartController::class,'cart']);
 Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
 Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
 Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFromCart'])->name('remove-from-cart');
+Route::get('/checkout', [CartController::class,'check']);
+Route::post('/checkout', [CartController::class,'checkout'])->name('checkout');
 
+// Route::get('/checkout', 'CartController@check');
+// Route::post('/checkout', 'CartController@checkout')->name('checkout');
+
+Route::get('/thankyou', [CartController::class,'thankyou']);
 
 Route::get('/products', [ProductsHomeController::class,'index']);
 Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");
 Route::get('/categories', [ProductsHomeController::class,'categories']);
 Route::get('/category-products/{id}', [ProductsHomeController::class,'categoryProducts']);
+
+
+
+
 
 //Add subscriber email
 // Route::get('/add-subscriber-email', [NewsletterController::class,'addSubscriber']);

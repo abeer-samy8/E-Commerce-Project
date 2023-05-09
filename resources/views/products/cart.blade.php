@@ -13,7 +13,7 @@
 @section("content")
 
 <!-- Start Hero Section -->
-<!-- <div class="hero">
+<div class="hero">
 				<div class="container">
 					<div class="row justify-content-between">
 						<div class="col-lg-5">
@@ -26,13 +26,13 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div>
 		<!-- End Hero Section -->
 
         @include("layouts.shared.msg")
 
 
-		<div class="untree_co-section before-footer-section">
+	<div class="untree_co-section before-footer-section">
             <div class="container">
               <div class="row mb-5">
                 <form class="col-md-12" method="post" action="{{route('post-cart')}}">
@@ -138,9 +138,6 @@
 
             </div>
         </div>
-
-
-
             </div>
                 @else
                 <div class='alert alert-warning'>There are no products in the cart.</div>

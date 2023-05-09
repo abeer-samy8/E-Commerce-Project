@@ -83,7 +83,7 @@
               </div>
 
 
-        
+
 
                         <form enctype='multipart/form-data' method='post'>
                             @csrf
@@ -132,7 +132,7 @@
     </div>
 </div>
 
-  <!-- End Contact Form -->
+<!-- End Contact Form -->
 
 
 
