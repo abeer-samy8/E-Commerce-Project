@@ -66,6 +66,9 @@ Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name(
 Route::get('/categories', [ProductsHomeController::class,'categories']);
 Route::get('/category-products/{id}', [ProductsHomeController::class,'categoryProducts']);
 
+Route::get('/stores', [ProductsHomeController::class,'stores']);
+Route::get('/store-products/{id}', [ProductsHomeController::class,'storeProducts']);
+
 
 
 

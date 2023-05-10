@@ -1,13 +1,8 @@
 @extends("layouts.frontHome")
 
-@section("title","Categories")
+@section("title","Stores")
 
 @section("css")
-<!-- theme stylesheet-->
-<!-- <link rel="stylesheet" href="{{asset('universal-theme/css/style.default.css')}}" id="theme-stylesheet"> -->
-<!--linear icon css-->
-<!-- <link rel="stylesheet" href="{{asset('universal-theme/assets/css/linearicons.css')}}"> -->
-
 
 @endsection
 
@@ -18,7 +13,7 @@
 					<div class="row justify-content-between">
 						<div class="col-lg-5">
 							<div class="intro-excerpt">
-								<h1>Categories</h1>
+								<h1>Stores</h1>
 								<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
 								<p><a href="{{asset('/products')}}" class="btn btn-secondary me-2">Shop Now</a></p>
 							</div>
@@ -41,20 +36,17 @@
             <!-- MENUS AND FILTERS-->
             <div class="panel panel-default sidebar-menu">
                 <div class="panel-heading">
-                <h3 class="h4 panel-title">Categories</h3>
+                <h3 class="h4 panel-title">Stores</h3>
                 </div>
                 <div class="panel-body">
                 <ul class="nav nav-pills flex-column text-sm category-menu">
-                @foreach ($categories as $category)
+                @foreach ($stores as $store)
                     <li class="nav-item">
                         <div class="d-flex justify-content-start align-items-center">
-                        <!-- checkbox input and label for filtering -->
-                        <!-- <input type="checkbox" id="category_{{ $category->id }}" name="category[]" value="{{ $category->id }}" {{ in_array($category->id, request()->get('category') ?? []) ? 'checked' : '' }}> -->
-                        <label for="category_{{ $category->id }}" class="w-100">
-                            <!-- category link with name and product count -->
-                            <a class="nav-link d-flex align-items-center justify-content-between" id='category' name='category' data-category-id="{{ $category->id }}">
-                            <span style='color: #198754 !important;'>{{ $category->name }}</span>
-                            <span class="badge badge-secondary">{{ $category->products()->count() }}</span>
+                        <label for="store_{{ $store->id }}" class="w-100">
+                        <a class="nav-link d-flex align-items-center justify-content-between" id='store' name='store' data-store-id="{{ $store->id }}">
+                            <span style='color: #198754 !important;'>{{ $store->name }}</span>
+                            <span class="badge badge-secondary">{{ $store->products()->count() }}</span>
                             </a>
                         </label>
                         </div>
@@ -133,12 +125,11 @@
 </div>
 @endsection
 @section('js')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(function(){
     $(".category-menu li").click(function(){
-        var categoryId = $(this).find(".nav-link").data("category-id");
-        $.get("/category-products/"+categoryId,function(json){
+        var storeId = $(this).find(".nav-link").data("store-id");
+        $.get("/store-products/"+storeId,function(json){
             $("#products").html(""); // clear existing products
             $(json).each(function(){
                 var html = '<div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">';

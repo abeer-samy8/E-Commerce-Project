@@ -15,7 +15,7 @@
             </li>
             <li><a class="nav-link" href="{{asset('products')}}">Sales</a></li>
             <li><a class="nav-link" href="{{asset('categories')}}">Categories</a></li>
-            <li><a class="nav-link" href="blog.html">Stores</a></li>
+            <li><a class="nav-link" href="{{asset('stores')}}">Stores</a></li>
             <li><a class="nav-link" href="{{asset('services')}}">Services</a></li>
             <li><a class="nav-link" href="{{asset('contact-us')}}">Contact us</a></li>
             <li><a class="nav-link" href="{{asset('/about-us')}}">About us</a></li>
