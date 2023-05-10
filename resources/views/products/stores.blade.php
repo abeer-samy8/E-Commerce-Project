@@ -44,29 +44,16 @@
                     <li class="nav-item">
                         <div class="d-flex justify-content-start align-items-center">
                         <label for="store_{{ $store->id }}" class="w-100">
-                        <a class="nav-link d-flex align-items-center justify-content-between" id='store' name='store' data-store-id="{{ $store->id }}">
-                            <span style='color: #198754 !important;'>{{ $store->name }}</span>
-                            <span class="badge badge-secondary">{{ $store->products()->count() }}</span>
+                        <a href="#" class="nav-link d-flex align-items-center justify-content-between store-link" data-store-id="{{$store->id}}">
+                            <span style='color: #198754 !important;'>{{$store->name }}</span>
+                            <span class="badge badge-secondary">{{$store->products()->count() }}</span>
                             </a>
                         </label>
                         </div>
                     </li>
                     @endforeach
 
-                    <li class="pt-3 mt-2 search-top-line">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <input name='q' id='q' value='{{request()->q}}' autofocus type="text"
-                                                    class='form-control' placeholder="Search product..." />
-                                            </div>
-                                            <div class="col-1 p-0 m-0">
-                                                <button type="submit" class="btn btn-primary brd-small-search">
-                                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </div>
 
-                    </li>
                 </ul>
                 </div>
             </div>
@@ -161,5 +148,7 @@ $(function(){
 });
 
 </script>
+
+
 
 @endsection

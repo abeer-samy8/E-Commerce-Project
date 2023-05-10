@@ -56,7 +56,9 @@ class ProductsController extends Controller
 
 
 public function storeProducts($id){
-    $stores = Store::where('store_id',$id)->get();
+    // $stores = Store::where('store_id',$id)->get();
+    $stores = \DB::table('products')->where('store_id',$id)->get();
+
     return $stores;
 
 }
@@ -64,19 +66,15 @@ public function storeProducts($id){
 
 public function stores(Request $request)
 {
-$q = $request->q;
 $storeId = $request->store;
 $query = Product::where('active', 1);
-if ($q) {
-    $query->whereRaw('(title like ? or slug like ? or details like ? )', ["%$q%", "%$q%", "%$q%"]);
-}
+
 if ($storeId) {
-    $query->where('store_id', $categoryId);
+    $query->where('store_id', $storeId);
 }
 
 $products = $query->paginate(6)
     ->appends([
-        'q' => $q,
         'store' => $storeId
     ]);
 
