@@ -89,6 +89,10 @@ class UserController extends Controller
         Alert::success('User Deleted successfully!', 'Success Message');
         return redirect(route("user.index"));
     }
+
+
+
+
     public function links($id)
     {
         $item = User::find($id);
@@ -100,9 +104,11 @@ class UserController extends Controller
         $links = \App\Models\Link::all();
         return view("admin.user.links",compact('item','links'));
     }
+
+
     public function postLinks($id,Request $request)
     {
-        \DB::table("users_links")->where('user_id',$id)->delete();
+        \DB::table("users_links")->where('user_id',$id)->delete();//روح ع الجدول هادا وكل اللينكات تحت هاد اليوزر يطيرها
         if($request->links){
             foreach($request->links as $link){
                 \DB::table("users_links")->insert([
@@ -115,4 +121,5 @@ class UserController extends Controller
         Alert::success('Permissions saved successfully!', 'Success Message');
         return redirect(route("user.index"));
     }
+
 }

@@ -56,8 +56,7 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function guardName()
-{
-  return 'api';
-}
+    public function links(){
+        return $this->belongsToMany(Link::class,'users_links');
+    }
 }

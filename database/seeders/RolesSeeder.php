@@ -22,12 +22,12 @@ class RolesSeeder extends Seeder
         Role::create([
             'name' => 'customer'
         ]);
-        // $user = User::create([
-        //     'name'=>'super admin',
-        //     'email'=>'admin@aa.net',
-        //     'password'=>bcrypt('123456789')
-        // ]);
-        // $user->assignRole('admin');
+        $user = User::create([
+            'name'=>'super admin',
+            'email'=>'admin@aa.net',
+            'password'=>bcrypt('123456789')
+        ]);
+        $user->assignRole('admin');
     }
 
 }

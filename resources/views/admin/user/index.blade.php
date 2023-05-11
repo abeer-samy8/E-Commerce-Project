@@ -58,7 +58,11 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td width="15%">
-                                   
+                                    <a href='{{ route("users.links",$item->id) }}'
+                                        class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                                        title="permission">
+                                        <i class="la la-lock"></i>
+                                    </a>
                                     <a href='{{ route("user.edit",$item->id) }}'
                                         class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
                                         title="update">

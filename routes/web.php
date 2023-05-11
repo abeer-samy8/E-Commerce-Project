@@ -123,6 +123,8 @@ Route::prefix("admin")->middleware(['auth','role:admin'])->group(function(){
 
 
     Route::resource("user",UserController::class);
+    Route::get("user/{id}/links",[UserController::class,'links'])->name("users.links");
+    Route::post("user/{id}/links",[UserController::class,'postLinks'])->name("users.post-links");
     Route::get("user/{id}/delete",[UserController::class,'destroy'])->name("users.delete");
 
     Route::get("change-pass",[ChangePasswordController::class,'edit'])->name("password.edit");
