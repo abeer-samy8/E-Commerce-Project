@@ -18,7 +18,7 @@ class TestimonialController extends Controller
     public function index()
     {
         $items = Testimonial::all();
-        return view("admin.testimonials.index")->with('items',$items);
+        return view("admin.testimonial.index")->with('items',$items);
     }
 
     /**
@@ -28,7 +28,7 @@ class TestimonialController extends Controller
      */
     public function create()
     {
-        return view("admin.testimonials.create");
+        return view("admin.testimonial.create");
 
     }
 
@@ -78,7 +78,7 @@ class TestimonialController extends Controller
             Alert::error('Invalid ID', 'Error Message');
             return redirect(route("testimonial.index"));
         }
-        return view("admin.testimonials.edit")->with('item',$item);
+        return view("admin.testimonial.edit")->with('item',$item);
     }
 
     /**

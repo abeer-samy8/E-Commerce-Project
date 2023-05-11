@@ -47,12 +47,12 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th class="product-thumbnail">Image</th>
-                          <th class="product-name">Product</th>
-                          <th class="product-price">Price</th>
-                          <th class="product-quantity">Quantity</th>
-                          <th class="product-total">Total</th>
-                          <th class="product-remove">Remove</th>
+                        <th class="product-thumbnail">Image</th>
+                        <th class="product-name">Product</th>
+                        <th class="product-price">Price</th>
+                        <th class="product-quantity">Quantity</th>
+                        <th class="product-total">Total</th>
+                        <th class="product-remove">Remove</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -70,28 +70,16 @@
                           </td>
                           <td>${{$price}}</td>
 
-                          <!-- <td>
-                            <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
-                              <div class="input-group-prepend">
-                                <button class="btn btn-outline-black decrease" type="button" name='id[]'>&minus;</button>
-                              </div>
-                              <input type="text" name='quantity[]' class="form-control text-center quantity-amount" value="{{$quantity}}" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                              <div class="input-group-append">
-                                <button class="btn btn-outline-black increase" type="button" name='id[]'>&plus;</button>
-                              </div>
-                            </div>
-                          </td> -->
-
-                          <td>
-                          <div  style="max-width: 80px;">
+                        <td>
+                        <div  style="max-width: 80px;">
                                     <input type='hidden' name='id[]' value='{{$product->id}}' />
                                     <input name='quantity[]' type="number" value="{{$quantity}}" class="form-control">
                                     </div>
 
                             </td>
 
-                          <td>${{$price*$quantity}}</td>
-                          <td><a href="{{route('remove-from-cart',$productId)}}" class="btn btn-black btn-sm" onclick='return confirm("Are You Sure? ")'>X</a></td>
+                        <td>${{$price*$quantity}}</td>
+                        <td><a href="{{route('remove-from-cart',$productId)}}" class="btn btn-black btn-sm" onclick='return confirm("Are You Sure? ")'>X</a></td>
                         </tr>
                         @endforeach
 
@@ -129,7 +117,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location=''">Proceed To Checkout</button>
+                                <button class="btn btn-black btn-lg py-3 btn-block">Proceed To Checkout</button>
                                 </div>
                             </div>
                             </div>
@@ -140,9 +128,18 @@
         </div>
             </div>
                 @else
-                <div class='alert alert-warning'>There are no products in the cart.</div>
-                <a href="{{asset('/products')}}" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
 
+                <div class='text-center' style='padding:30px 0;'>
+                <span class="display-3 thankyou-icon text-primary">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-check mb-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                    <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                    </svg>
+                </span>
+                <h2 class="display-3 text-black">Your cart is empty!</h2>
+                <p>Add items to it now.</p>
+                <a href="{{asset('/products')}}" class="btn btn-outline-black btn-sm btn-block">Shop Now</a>
+                </div>
                 @endif
                 </form>
             </div>
