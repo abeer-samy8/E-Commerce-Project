@@ -87,8 +87,10 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::prefix("admin")->middleware(['auth','role:admin'])->group(function(){
+Route::prefix("admin")->middleware(['auth','role:admin','links.permissions'])->group(function(){
     Route::get("/",[HomeController::class,'index']);
+    Route::get("no-permission",[HomeController::class,'noPermission'])->name('no-permission');
+
     Route::resource("category",CategoryController::class);
     Route::get("category/{id}/delete",[CategoryController::class,'destroy'])->name("category.delete");
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Profile\EditRequest;
 use App\Models\Customer;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class UserProfileController extends Controller
@@ -33,12 +34,8 @@ class UserProfileController extends Controller
             $customerDB->update($requestData);
         }
 
+        Alert::success('Profile Updated successfully!', 'Success Message');
 
-
-
-
-
-        session()->flash('msg','s:تم تعديل الملف الشخصي بنجاح');
         return redirect(route("profile.edit"));
     }
 }

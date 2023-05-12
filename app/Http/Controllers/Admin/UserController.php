@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\ModelHasRole;
-
 use App\Http\Requests\User\CreateRequest;
 use App\Http\Requests\User\EditRequest;
 use Spatie\Permission\Models\Role;
