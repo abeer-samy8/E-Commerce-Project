@@ -49,6 +49,7 @@ Route::get('/sales',[FrontHomeController::class,'sales']);
 Route::get('/services', [FrontHomeController::class,'services']);
 Route::get('/about-us', [FrontHomeController::class,'aboutUs']);
 
+
 Route::get('/products/cart', [CartController::class,'cart']);
 Route::get('/products/add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
 Route::post('/products/post-cart', [CartController::class,'postCart'])->name('post-cart');
@@ -60,6 +61,8 @@ Route::post('/checkout', [CartController::class,'checkout'])->name('checkout');
 // Route::post('/checkout', 'CartController@checkout')->name('checkout');
 
 Route::get('/thankyou', [CartController::class,'thankyou']);
+
+Route::get('/search', [ProductsHomeController::class,'search'])->name('products.search');
 
 Route::get('/products', [ProductsHomeController::class,'index']);
 Route::get('/products/{slug}', [ProductsHomeController::class,'details'])->name("product.details");

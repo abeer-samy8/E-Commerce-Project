@@ -1,4 +1,8 @@
-	<!-- Start Header/Navigation -->
+<style>
+
+    </style>
+
+    <!-- Start Header/Navigation -->
     <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
 <div class="container">
@@ -20,9 +24,14 @@
             <li><a class="nav-link" href="{{asset('contact-us')}}">Contact us</a></li>
             <li><a class="nav-link" href="{{asset('/about-us')}}">About us</a></li>
 
-
+            <li><div class="search-container">
+                <form action="{{ route('products.search') }}" method="GET" id="search-form">
+                    <input type="text" name="query" placeholder="Search products...">
+                </form>
+            </div></li>
 
         </ul>
+
 <div class="form-inline mt-2 mt-md-0 mr-auto">
                 <ul class="navbar-nav">
                     @if (Route::has('login'))
@@ -56,9 +65,9 @@
                 </ul>
             </div>
 
-        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 cartt">
+        <!-- <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 cartt">
             <li><img src="{{asset('furni/images/user.svg')}}"></li>
-            <li>
+            <li> -->
 
 
             <a class="nav-link" href="{{asset('products/cart')}}">
@@ -79,4 +88,18 @@
 </nav>
 <!-- End Header/Navigation -->
 
+
+<script>
+    // Get the search form and input field
+    const form = document.querySelector('#search-form');
+    const input = form.querySelector('input[name="query"]');
+
+    // Listen for changes to the input field
+    input.addEventListener('input', () => {
+        // Submit the form if the input value is not empty
+        if (input.value.trim() !== '') {
+            form.submit();
+        }
+    });
+</script>
 

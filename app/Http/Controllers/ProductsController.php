@@ -10,17 +10,24 @@ use App\Models\BillingDetails;
 
 class ProductsController extends Controller
 {
-    function index(){
-      //  $q = $request->q;
+    function index(Request $request){
+        $q = $request->q;
         $query = product::whereRaw('active=1');
-       // if($q){
-     //   $query->whereRaw('(title like ? or slug like ? or details like ? )',["%$q%","%$q%","%$q%"]);
-       // }
+        if($q){
+        $query->whereRaw('(title like ? or slug like ? or details like ? )',["%$q%","%$q%","%$q%"]);
+        }
         $products = $query->paginate(6)
         ->appends([
-       //     'q'     =>$q
+            'q'     =>$q
         ]);
         return view("products.index",compact('products'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $products = Product::where('title', 'LIKE', '%'.$query.'%')->get();
+        return view('products.index', ['products' => $products]);
     }
 
 
