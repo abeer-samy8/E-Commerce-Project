@@ -101,21 +101,29 @@
 		                    <th>Total</th>
 		                  </thead>
 		                  <tbody>
-		                    <tr>
-		                      <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-		                      <td>$250.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
-		                      <td>$100.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-		                      <td class="text-black">$350.00</td>
-		                    </tr>
+                        <?php
+                            $cartItems = json_decode(Cookie::get('cart'), true);
+                            $cartTotal = 0;
+                        ?>
+                        @foreach ($cartItems as $productId => $quantity)
+                        <?php
+                    $product = \App\Models\Product::find($productId);
+                    $price = ($product->sale_price ?? $product->regular_price);
+                        $total = $price * $quantity;
+                        $cartTotal += $total;
+                            ?>
+
+
+		                <tr>
+		                    <td>{{$product->title}} <strong class="mx-2">x</strong>{{ $quantity }}</td>
+		                    <td>${{ $total }}</td>
+		                </tr>
+
+
+@endforeach
 		                    <tr>
 		                      <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-		                      <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+		                      <td class="text-black font-weight-bold"><strong>${{ $cartTotal }}</strong></td>
 		                    </tr>
 		                  </tbody>
 		                </table>
