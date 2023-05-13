@@ -77,8 +77,7 @@ Route::get('/store-products/{id}', [ProductsHomeController::class,'storeProducts
 
 
 //Add subscriber email
-// Route::get('/add-subscriber-email', [NewsletterController::class,'addSubscriber']);
-Route::post('/add-subscriber-email','NewsletterController@addSubscriber');
+Route::post('/add-subscriber-email', [NewsletterController::class,'addSubscriber']);
 
 
 Route::middleware('auth')->group(function () {

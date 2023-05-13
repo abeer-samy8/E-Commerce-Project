@@ -51,36 +51,38 @@ class CartController extends Controller
                     return redirect('login');
                 }
 
-                // $user = auth()->user();
-                // $order = Order::create([
-                //     'customer_id'=>$user->id,
-                //     'order_status_id'=>1,
-                //     'total_price'=>$totalPrice,
-                //     'total_items'=>count($request->id),
-                //     'name'=>$user->name,
-                //     'user_id'=>$user->id,
-                //     'email'=>$user->email,
-                //     'phone'=>$user->customer->phone??'',
-                //     'mobile'=>$user->customer->mobile??'',
-                //     'city'=>$user->customer->city??'',
-                //     'address'=>$user->customer->address??''
-                // ]);
-                // for($i=0;$i<count($request->id);$i++){
-                //     $productId = $request->id[$i];
-                //     $quantity = $request->quantity[$i];
-                //     $product = Product::find($productId);
-                //     $price = ($product->sale_price??$product->regular_price);
-                //     $total = $price * $quantity;
-                //     OrderDetails::create([
-                //         'order_id'=>$order->id,
-                //         'product_id'=>$productId,
-                //         'price'=>$price,
-                //         'quantity'=>$quantity,
-                //         'total_price'=>$total,
-                //     ]);
-                // }
-            //    Cookie::queue('cart', '', 60*24*14);
-                return redirect('checkout');
+                $user = auth()->user();
+                $orderData = [
+                    'customer_id' => $user->id,
+                    'order_status_id' => 1,
+                    'total_price' => $totalPrice,
+                    'total_items' => count($request->id),
+                    'name' => $user->name,
+                    'user_id' => $user->id,
+                    'email' => $user->email,
+                    'phone' => $user->customer->phone ?? '',
+                    'mobile' => $user->customer->mobile ?? '',
+                    'city' => $user->customer->city ?? '',
+                    'address' => $user->customer->address ?? '',
+                ];
+                $orderDetailsData = [];
+                for ($i = 0; $i < count($request->id); $i++) {
+                    $productId = $request->id[$i];
+                    $quantity = $request->quantity[$i];
+                    $product = Product::find($productId);
+                    $price = ($product->sale_price ?? $product->regular_price);
+                    $total = $price * $quantity;
+                    $orderDetailsData[] = [
+                        'product_id' => $productId,
+                        'price' => $price,
+                        'quantity' => $quantity,
+                        'total_price' => $total,
+                    ];
+                }
+                session(['orderData' => $orderData]);
+                session(['orderDetailsData' => $orderDetailsData]);
+                return redirect()->route('checkout');
+
     }
 
 }
@@ -116,15 +118,26 @@ class CartController extends Controller
         return view("products.checkout", compact('bills'));
     }
 
-
-
-
     public function checkout(Request $request){
             $requestData=$request->all();
             BillingDetails::create($requestData);
 
-        Cookie::queue('cart', '', 60*24*14);
-        return redirect('thankyou');
+            $orderData = session('orderData');
+            $orderDetailsData = session('orderDetailsData');
+            $order = Order::create($orderData);
+            foreach ($orderDetailsData as $orderDetailData) {
+                OrderDetails::create([
+                    'order_id' => $order->id,
+                    'product_id' => $orderDetailData['product_id'],
+                    'price' => $orderDetailData['price'],
+                    'quantity' => $orderDetailData['quantity'],
+                    'total_price' => $orderDetailData['total_price'],
+                ]);
+            }
+            session()->forget(['orderData', 'orderDetailsData']);
+
+            Cookie::queue('cart', '', 60*24*14);
+            return redirect('thankyou');
     }
 
     public function thankyou(){
