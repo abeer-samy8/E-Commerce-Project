@@ -54,7 +54,11 @@
                         <div class="ribbon new">NEW</div>
                         </div>
                             @endif
-                            <button class="btn " style="padding: 5px 10px; font-size: 14px;">Details</button>
+                            <br>
+                            <form action="{{ route('product.details', $product->slug) }}" method="GET">
+                                <input type="hidden" name="slug" value="{{ $product->slug }}">
+                                <button class="btn" style="padding: 5px 10px; font-size: 14px;">Details</button>
+                            </form>
 
                                 <span class="icon-cross">
                                     <img src="{{ asset('furni/images/cross.svg') }}" class="img-fluid">

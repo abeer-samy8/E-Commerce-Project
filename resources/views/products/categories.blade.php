@@ -138,7 +138,7 @@
 $(function(){
     $(".category-menu li").click(function(){
         var categoryId = $(this).find(".nav-link").data("category-id");
-        $.get("/category-products/"+categoryId,function(json){
+        $.get("/category-products/"+categoryId,function(json){ //AJAX request
             $("#products").html(""); // clear existing products
             $(json).each(function(){
                 var html = '<div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">';

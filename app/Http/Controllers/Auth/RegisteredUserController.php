@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Customer;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -34,18 +35,35 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+
         ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'status'=> 1
+            'status' => 1,
         ]);
-       // $user->assignRole('customer');
+
+        $customer = new Customer();
+
+        // Upload and save the image if provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('customer_images', 'public');
+            $customer->image = $imagePath;
+        }
+
+        // Associate the user with the customer
+        $customer->user_id = $user->id;
+        $customer->save();
+
+        // Assign the "customer" role to the user
         $role= new ModelHasRole;
         $role->role_id=2;
         $role->model_type='App\Models\User';
@@ -55,6 +73,6 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        return redirect(route("/admin"));
+        return redirect(RouteServiceProvider::HOME);
     }
 }

@@ -80,7 +80,6 @@ img {
 
 .card {
     margin: 50px;
-    background: #eee;
     padding: 3em;
     line-height: 1.5em;
 }
@@ -124,12 +123,12 @@ img {
 
 .checked,
 .current_price span {
-    color: #ff9f1a;
+    color: #198754;
     text-decoration: line-through;
 }
 
 .price span {
-    color: #ff9f1a;
+    color:#198754;
 }
 
 .product-title,
@@ -174,7 +173,7 @@ img {
 
 .add-to-cart,
 .like {
-    background: #ff9f1a;
+    background:  #198754;
     padding: 1.2em 1.5em;
     border: none;
     text-transform: UPPERCASE;
@@ -267,15 +266,15 @@ img {
                     </div>
                     <ul class="preview-thumbnail nav nav-tabs">
                         <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                    src="{{asset('tamkeen-proj/img/watch.jpg')}}" /></a></li>
+                                    src="{{asset('furni/images/watch.jpg')}}" /></a></li>
                         <li><a data-target="#pic-2" data-toggle="tab"><img
-                                    src="{{asset('tamkeen-proj/img/watch.jpg')}}" /></a></li>
+                                    src="{{asset('furni/images/watch.jpg')}}" /></a></li>
                         <li><a data-target="#pic-3" data-toggle="tab"><img
-                                    src="{{asset('tamkeen-proj/img/watch.jpg')}}" /></a></li>
+                                    src="{{asset('furni/images/watch.jpg')}}" /></a></li>
                         <li><a data-target="#pic-4" data-toggle="tab"><img
-                                    src="{{asset('tamkeen-proj/img/watch.jpg')}}" /></a></li>
+                                    src="{{asset('furni/images/watch.jpg')}}" /></a></li>
                         <li><a data-target="#pic-5" data-toggle="tab"><img
-                                    src="{{asset('tamkeen-proj/img/watch.jpg')}}" /></a></li>
+                                    src="{{asset('furni/images/watch.jpg')}}" /></a></li>
                     </ul>
                 </div>
 
@@ -326,10 +325,7 @@ img {
                 </div>
             </div>
         </div>
-        <div>
-            <h3 class="review">Product Review</h3>
-            <div class="fb-comments" data-href="{{Request::url()}}" data-width="" data-numposts="5">
-            </div>
+
         </div>
     </div>
 

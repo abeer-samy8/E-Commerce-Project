@@ -61,7 +61,6 @@ Route::post('/checkout', [CartController::class,'checkout'])->name('checkout');
 // Route::post('/checkout', 'CartController@checkout')->name('checkout');
 
 Route::get('/thankyou', [CartController::class,'thankyou']);
-
 Route::get('/search', [ProductsHomeController::class,'search'])->name('products.search');
 
 Route::get('/products', [ProductsHomeController::class,'index']);
