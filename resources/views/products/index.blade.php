@@ -20,11 +20,10 @@
 							</div>
 						</div>
 						<div class="col-lg-7">
-
 						</div>
 					</div>
 				</div>
-			</div>
+	</div>
 		<!-- End Hero Section -->
 
 

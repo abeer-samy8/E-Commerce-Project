@@ -12,7 +12,7 @@ class ProductsController extends Controller
 {
     function index(Request $request){
         $q = $request->q;
-        $query = product::whereRaw('active=1');
+        $query = Product::where('status', 'active');
         if($q){
         $query->whereRaw('(title like ? or slug like ? or details like ? )',["%$q%","%$q%","%$q%"]);
         }
@@ -42,7 +42,7 @@ class ProductsController extends Controller
 {
     $q = $request->q;
     $categoryId = $request->category;
-    $query = Product::where('active', 1);
+    $query = Product::where('status', 'active');
     if ($q) {
         $query->whereRaw('(title like ? or slug like ? or details like ? )', ["%$q%", "%$q%", "%$q%"]);
     }
@@ -74,7 +74,7 @@ public function storeProducts($id){
 public function stores(Request $request)
 {
 $storeId = $request->store;
-$query = Product::where('active', 1);
+$query = Product::where('status', 'active');
 
 if ($storeId) {
     $query->where('store_id', $storeId);
@@ -97,7 +97,7 @@ return view("products.stores", compact('products', 'stores'));
     public function details($slug)
     {
         $product=Product::where ('products.slug',$slug)
-        ->where('active',1)
+        ->where('status', 'active')
         ->first();
         if(!$product){
             session()->flash("msg","e: الرابط المطلوب غير موجود");

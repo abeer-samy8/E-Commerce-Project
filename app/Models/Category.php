@@ -9,9 +9,11 @@ class Category extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'active'
+        'status'
     ];
     
+    const STATUS = ['active', 'inactive'];
+
     public function products(){
         return $this->hasMany(product::class);
     }

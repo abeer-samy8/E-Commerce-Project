@@ -24,11 +24,11 @@
                         placeholder='Enter Search Keyword Here'/>
                 </div>
                 <div class='col-sm-3'>
-                    <select name="active" class='form-control select2'>
-                        <option value=''>Status</option>
-                        <option value='1'>Active</option>
-                        <option value='0'>Inactive</option>
-                    </select>
+                <select name="status" class="form-control select2">
+                    <option value="">Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
                 </div>
                 <div class='col-sm-1 text-right'>
                     <button type="submit" class='btn btn-primary'><i class='fa fa-search'></i></button>
@@ -68,7 +68,7 @@
                                     </label>
                                 </td>
                                 <td>{{$item->name}}</td>
-                                <td>{{$item->active==0?'Inactive':' Active'}}</td>
+                                <td>{{ $item->status === \App\Models\Category::STATUS[0] ? 'Active' : 'Inactive' }}</td>
                                 <td>{{$item->updated_at}}</td>
                                 <td>
                                     <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"
@@ -87,6 +87,8 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{$items->links('vendor.pagination.custom')}}
+
                     @else
                     <div class="alert alert-info"> There are no results in the search... </div>
 

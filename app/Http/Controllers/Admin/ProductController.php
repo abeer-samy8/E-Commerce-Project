@@ -27,49 +27,46 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-     public function activate($id){
+//this function for status checkbox
+    public function activate($id){
         //sleep(3);
         $item = Product::find($id);
-        if($item){
-            $item->active=!$item->active;
+        if ($item) {
+            $newStatus = ($item->status === 'active') ? 'inactive' : 'active';
+            $item->status = $newStatus;
             $item->save();
-            return response()->json(['status'=>1,'msg'=>'updated successfully']);
+            return response()->json(['status' => 1, 'msg' => 'Updated successfully']);
         }
-        return response()->json(['status'=>0,'msg'=>'invalid id']);
+        return response()->json(['status' => 0, 'msg' => 'Invalid ID']);
+
     }
 
-    
+
     public function index(Request $request)
     {
         $q = $request->q;
         $category = $request->category;
         $store = $request->store;
-        $active = $request->active;
-
+        $status = $request->status;
         $query = product::whereRaw('true');
-
-        if($active!=''){
-            $query->where('active',$active);
+        if($status!=''){
+            $query->where('status',$status);
         }
-
         if($category){
             $query->where('category_id',$category);
         }
         if($store){
             $query->where('store_id',$store);
         }
-
         if($q){
             $query->whereRaw('(title like ? or slug like ?)',["%$q%","%$q%"]);
         }
-
 
         $products = $query->paginate(8)
         ->appends([
             'q'     =>$q,
             'category'=>$category,
-            'active'=>$active
+            'status'=>$status
         ]);
 
         $categories = category::all();
@@ -87,7 +84,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-
         $products = product::all();
         $categories = category::all();
         $stores = store::all();
@@ -111,8 +107,8 @@ class ProductController extends Controller
         $requestData['images'] = "1";
 
         product::create($requestData);
-        Alert::success('Product added successfully!', 'Success Message');
-        return redirect(route("product.index"));
+        return redirect()->route("product.index")->with('msg','Product added successfully!');
+
     }
 
     /**
@@ -123,11 +119,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = product::find($id);
-        if(!$product){
-            // Alert::warning('The address is incorrect', 'Warning Message');
-            return redirect(route("product.index"));
-        }
+
+        $product = product::findOrFail($id);
+
         return view("admin.product.show",compact('product'));
     }
 
@@ -140,11 +134,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = product::find($id);
-        if(!$product){
-            Alert::error('Invalid ID', 'Error Message');
-            return redirect(route("product.index"));
-        }
+        $product = product::findOrFail($id);
 
         $categories = category::all();
         $stores = store::all();
@@ -163,32 +153,20 @@ class ProductController extends Controller
     public function update(EditRequest $request, $id)
     {
         $productDB = product::find($id);
-       // $request['slug'] = Str::slug($request['title']);
         $request['images'] = "2";
+        $requestData = $request->all();
         if($request['main_image']){
-            $requestData = $request->all();
             $fileName = $request->main_image->store("public/assets/img");
             $imageName = $request->main_image->hashName();
             $requestData['main_image'] = $imageName;
             $productDB->update($requestData);
         }
         else{
-            product::where('id', $id)->update(array('title' => $request['title'],
-                                                    'quantity'=> $request['quantity'],
-                                                    'category_id'=> $request['category_id'],
-                                                    'store_id'=> $request['store_id'],
-                                                    'currency_id'=> $request['currency_id'],
-                                                    'regular_price'=> $request['regular_price'],
-                                                    'sale_price'=> $request['sale_price'],
-                                                    'details'=> $request['details'],
-                                                     //'slug'=> $request['slug'],
-                                                    'active'=> $request['active']
-                                                    ));
+            $productDB->update($requestData);
+
         }
+        return redirect()->route("product.index")->with('msg','Product Updated successfully!');
 
-
-        Alert::success('Category Updated Successfuly!', 'Success Message');
-        return redirect(route("product.index"));
 
     }
 
@@ -200,14 +178,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $item = Product::find($id);
-        if (!$item) {
-        Alert::error('Invalid ID', 'Error Message');
-        }
+        $item = product::findOrFail($id);
         $item->delete();
-        // return a success message
-        Alert::success('Product Deleted Successfuly!', 'Success Message');
-        return redirect (route("product.index"));
-
+        return redirect()->route("product.index")->with('msg','Product Deleted Successfuly!');
     }
 }

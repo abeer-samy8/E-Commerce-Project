@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('currency_id');
             $table->integer('regular_price');
             $table->integer('sale_price')->nullable();
-            $table->boolean('active');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->unsignedInteger('quantity')->default(10);
             $table->timestamps();
         });

@@ -67,12 +67,15 @@
                     </select>
                 </div>
                 <div class='col-2'>
-                    <select name='active' id='active' class='select2 form-control'>
+                    <select name='status' id='status' class='select2 form-control'>
                         <option value=''>Status</option>
-                        <option {{ request()->active=='1'?"selected":"" }} value='1'>Active</option>
-                        <option {{ request()->active=='0'?"selected":"" }} value='0'>Inactive</option>
+                        <option {{ request()->active=='Active'?"selected":"" }} value='active'>Active</option>
+                        <option {{ request()->Inactive=='0'?"selected":"" }} value='inactive'>Inactive</option>
                     </select>
                 </div>
+
+
+
                 <div class='col-4'>
                     <input type="submit" class='btn btn-primary mr-2' value='Search' />
                     <input type="submit" class='btn btn-secondary' value='Clear search'
@@ -123,8 +126,7 @@
                                 <td>{{ $product->currency->symbol ?? '' }}{{ $product->sale_price ?? 0 }}</td>
 
                                 <td>{{ $product->quantity }}</td>
-                                <td align='center'><input value='{{ $product->id }}' type='checkbox' class='cbActive' {{ $product->active=='1'?"checked":"" }} />
-                                <div class="m-spinner"></div>
+                                <td align="center"><input value="{{ $product->id }}" type="checkbox" class="cbActive" {{ $product->status == 'active' ? 'checked' : '' }} /></td>
                                 </td>
                                 <td><img height=50 width= 50 src='{{asset("storage/assets/img/{$product->main_image}")}}' alt=""></td>
                                 <td width="15%">

@@ -20,30 +20,26 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $q=$request->q;
-        $active=$request->active;
-        $items=Category::whereRaw("true");
 
-        if($active)
-        {
-            $items->where("active",$active); //"active" اسم العمود
-        }
-        if($active=="0")
-        {
-            $items->where("active",$active);
-        }
-        if($q)
-        {
-            $items->whereRaw('(name like ? )',["%$q%"]);
+        $q = $request->q;
+        $status = $request->status;
+        $items = Category::whereRaw("true");
+
+        if ($status) {
+            $items->where("status", $status);
         }
 
-        $items=$items->paginate(10)
-        ->appends([
-            'q'=>$q,
-            'active'=>$active
+        if ($q) {
+            $items->whereRaw('(name LIKE ?)', ["%$q%"]);
+        }
+
+        $items = $items->paginate(10)->appends([
+            'q' => $q,
+            'status' => $status
         ]);
 
-        return view('admin.category.index')->with("items",$items);
+        return view('admin.category.index')->with("items", $items);
+
     }
 
     /**
@@ -67,8 +63,8 @@ class CategoryController extends Controller
     {
         $data=$request->all();
         Category::create($data);
-        Alert::success('Category added successfully!', 'Success Message');
-        return redirect (route("category.index"));
+        return redirect()->route("category.index")->with('msg','Category added successfully!');
+
 
     }
 
@@ -80,13 +76,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $item= Category::find($id);
-        if(!$item)
-        {
-            return redirect(route("category.index"));
-        }
+        $item = Category::findOrFail($id);
+        return view("admin.category.show", compact('item'));
 
-        return view("admin.category.show",compact('item'));
     }
 
     /**
@@ -97,14 +89,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $item= Category::find($id);
-        if(!$item)
-        {
-            Alert::error('Invalid ID', 'Error Message');
-            return redirect(route("category.index"));
+        $item = Category::findOrFail($id);
+        return view("admin.category.edit", compact('item'));
 
-        }
-        return view("admin.category.edit",compact('item'));
     }
 
     /**
@@ -114,23 +101,24 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function update(EditRequest $request, $id)
     {
-        $item=Category::find($id);
-          $data=$request->all();
-          if($request['active']==1){
-            $data['active']=1;
-          }
-          else{
-            $data['active']=0;
-          }
-
-          $item->update($data);
-
-          Alert::success('Category Updated Successfuly!', 'Success Message');
-
-          return redirect (route("category.index"));
+        $item = Category::find($id);
+        $data = $request->all();
+        if ($request->status === Category::STATUS[0]) {
+            $data['status'] = Category::STATUS[0];
+        } else {
+            $data['status'] = Category::STATUS[1];
+        }
+        $item->update($data);
+        return redirect()->route("category.index")->with('msg', 'Category Updated Successfully!');
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -140,15 +128,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $item = Category::find($id);
-        if (!$item) {
-            Alert::error('Invalid ID', 'Error Message');
-
-        }
+        $item = Category::findOrFail($id);
         $item->delete();
-        // return a success message
-        Alert::success('Category Deleted Successfuly!', 'Success Message');
-        return redirect (route("category.index"));
+        session()->flash('msg','s:Category Deleted Successfully!');
+        return redirect()->route("category.index")->with('msg','s:Category Deleted Successfully!');
+
+
 
     }
 

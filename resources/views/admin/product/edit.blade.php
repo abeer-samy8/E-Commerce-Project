@@ -96,15 +96,14 @@
                         </div>
                     </div>
                     <div class="m-form__group form-group row">
-                        <label class=" col-lg-3 col-form-label">status</label>
+                        <label class="col-lg-3 col-form-label">Active / Inactive</label>
                         <div class="m-radio-inline col-lg-6">
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{old('active',$product->active)=='1'?"checked":""}} type="radio" name="active" checked=""
-                                    value="1" aria-describedby="account_group-error"> Active
+                                <input {{ $product->status == 'active' ? 'checked' : '' }} type="radio" name="status" value="active"> Active
                                 <span></span>
                             </label>
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{old('active',$product->active)=='0'?"checked":""}} type="radio" name="active" value="0"> Inactive
+                                <input {{ $product->status == 'inactive' ? 'checked' : '' }} type="radio" name="status" value="inactive"> Inactive
                                 <span></span>
                             </label>
                         </div>

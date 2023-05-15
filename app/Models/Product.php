@@ -18,7 +18,7 @@ class Product extends Model
         'currency_id',
         'regular_price',
         'sale_price',
-        'active',
+        'status',
         'quantity',
         'images'
     ];
