@@ -18,21 +18,21 @@
 
 
                     <div class="m-form__group form-group row">
-                        <label class=" col-lg-3 col-form-label">النشاط</label>
+                        <label class="col-lg-3 col-form-label">Active / Inactive</label>
                         <div class="m-radio-inline col-lg-6">
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{$item->active=='1'?"checked":""}} type="radio" name="active" checked=""
-                                    value="1" aria-describedby="account_group-error">Active
+                                <input {{ $item->status === \App\Models\Service::STATUS_ACTIVE ? 'checked' : '' }} type="radio" name="status" value="active"> Active
                                 <span></span>
                             </label>
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{$item->active=='0'?"checked":""}} type="radio" name="active" value="0"> Inactive
-
+                                <input {{ $item->status === \App\Models\Service::STATUS_INACTIVE ? 'checked' : '' }} type="radio" name="status" value="inactive"> Inactive
                                 <span></span>
                             </label>
                         </div>
                         <span class="m-form__help"></span>
                     </div>
+
+
                     <div class="form-group m-form__group row">
                         <label class="col-lg-3 col-form-label">Summery</label>
                         <div class="col-lg-6">

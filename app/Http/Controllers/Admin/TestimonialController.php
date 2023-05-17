@@ -50,8 +50,8 @@ class TestimonialController extends Controller
             $requestData['image'] = $imageName;
         }
         Testimonial::create($requestData);
-        Alert::success(' Added successfully!', 'Success Message');
-        return redirect(route("testimonial.index"));
+        return redirect()->route("testimonial.index")->with('msg','s:Added successfully!');
+
     }
 
     /**
@@ -73,11 +73,7 @@ class TestimonialController extends Controller
      */
     public function edit($id)
     {
-        $item = Testimonial::find($id);
-        if(!$item){
-            Alert::error('Invalid ID', 'Error Message');
-            return redirect(route("testimonial.index"));
-        }
+        $item = Testimonial::findOrFail($id);
         return view("admin.testimonial.edit")->with('item',$item);
     }
 
@@ -98,9 +94,7 @@ class TestimonialController extends Controller
             $requestData['image'] = $imageName;
         }
         $itemDB->update($requestData);
-
-        Alert::success(' Updated successfully!', 'Success Message');
-        return redirect(route("testimonial.index"));
+        return redirect()->route("testimonial.index")->with('msg','s:Updated successfully!');
     }
 
     /**
@@ -113,7 +107,6 @@ class TestimonialController extends Controller
     {
         $itemDB = Testimonial::find($id);
         $itemDB->delete();
-        Alert::success(' Deleted successfully!', 'Success Message');
-        return redirect(route("testimonial.index"));
+        return redirect()->route("testimonial.index")->with('msg','s:Deleted successfully!');
     }
 }

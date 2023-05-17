@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ModelHasRole;
 use App\Http\Requests\User\CreateRequest;
 use App\Http\Requests\User\EditRequest;
-use Spatie\Permission\Models\Role;
 use Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -18,12 +16,16 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $q = $request->q;
-        $adminRole = Role::findByName('admin');
-        $items = $adminRole->users()->whereRaw('(email like ? or name like ?)',["%$q%","%$q%"])
-            ->paginate(10)
-            ->appends(['q'=>$q]);
+        $items = User::where('role', User::ROLE_ADMIN)
+                    ->where(function($query) use ($q) {
+                        $query->where('email', 'like', "%$q%")
+                            ->orWhere('name', 'like', "%$q%");
+                    })
+                    ->paginate(10)
+                    ->appends(['q' => $q]);
 
-        return view("admin.user.index")->with('items',$items);
+        return view("admin.user.index")->with('items', $items);
+
     }
 
     public function create()
@@ -35,16 +37,11 @@ class UserController extends Controller
     {
         $requestData = $request->all();
         $requestData['password'] = bcrypt($requestData['password']);
+        $requestData['role'] = User::ROLE_ADMIN; // تعيين دور المستخدم للقيمة المناسبة
         $user = User::create($requestData);
-      //  $user->assignRole('admin');
-       $role= new ModelHasRole;
-       $role->role_id=1;
-       $role->model_type='App\Models\User';
-       $role->model_id=$user->id;
-       $role->save();
-    Alert::success('User Added successfully!', 'Success Message');
 
-        return redirect(route("user.create"));
+        return redirect()->route("user.create")->with('msg', 's:User Added successfully!');
+
     }
 
     public function show($id)
@@ -55,12 +52,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $item = User::find($id);
-        if(!$item){
-            Alert::warning('Incorrect user address', 'Warning Message');
-
-            return redirect(route("user.index"));
-        }
+        $item = User::findOrFail($id);
         return view("admin.user.edit",compact('item'));
     }
 
@@ -75,9 +67,7 @@ class UserController extends Controller
             unset($requestData['password']);
         }
         $user->update($requestData);
-
-        Alert::success('User Updated successfully!', 'Success Message');
-        return redirect(route("user.index"));
+        return redirect()->route("user.index")->with('msg','s:User Updated successfully!');
     }
 
 
@@ -85,8 +75,7 @@ class UserController extends Controller
     {
         $itemDB = User::find($id);
         $itemDB->delete();
-        Alert::success('User Deleted successfully!', 'Success Message');
-        return redirect(route("user.index"));
+        return redirect()->route("user.index")->with('msg','s:User Deleted successfully!');
     }
 
 
@@ -117,8 +106,7 @@ class UserController extends Controller
                 ]);
             }
         }
-        Alert::success('Permissions saved successfully!', 'Success Message');
-        return redirect(route("user.index"));
+        return redirect()->route("user.index")->with('msg','s:Permissions saved successfully!');
     }
 
 }

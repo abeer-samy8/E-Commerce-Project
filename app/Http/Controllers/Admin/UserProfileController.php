@@ -33,9 +33,7 @@ class UserProfileController extends Controller
         if($customerDB){
             $customerDB->update($requestData);
         }
+        return redirect()->route("profile.edit")->with('msg','s:Profile Updated successfully!');
 
-        Alert::success('Profile Updated successfully!', 'Success Message');
-
-        return redirect(route("profile.edit"));
     }
 }

@@ -21,14 +21,10 @@ class StoreController extends Controller
     {
         $q=$request->q;
         $items=Store::whereRaw("true");
-
-
-
         if($q)
         {
             $items->whereRaw('(name like ? )',["%$q%"]);
         }
-
         $items=$items->paginate(10)
         ->appends([
             'q'=>$q,
@@ -58,8 +54,7 @@ class StoreController extends Controller
     {
         $data=$request->all();
         Store::create($data);
-        Alert::success('Store added successfully!', 'Success Message');
-        return redirect (route("store.index"));
+        return redirect()->route("store.index")->with('msg','s:Store added successfully!');
     }
 
     /**
@@ -70,12 +65,7 @@ class StoreController extends Controller
      */
     public function show($id)
     {
-        $item= Store::find($id);
-        if(!$item)
-        {
-            return redirect(route("store.index"));
-        }
-
+        $item= Store::findOrFail($id);
         return view("admin.store.show",compact('item'));
     }
 
@@ -87,13 +77,7 @@ class StoreController extends Controller
      */
     public function edit($id)
     {
-        $item= Store::find($id);
-        if(!$item)
-        {
-            Alert::error('Invalid ID', 'Error Message');
-            return redirect(route("store.index"));
-
-        }
+        $item= Store::findOrFail($id);
         return view("admin.store.edit",compact('item'));
     }
 
@@ -108,10 +92,8 @@ class StoreController extends Controller
     {
         $item=Store::find($id);
         $data=$request->all();
-
         $item->update($data);
-        Alert::success('Store Updated Successfuly!', 'Success Message');
-        return redirect (route("store.index"));
+        return redirect()->route("store.index")->with('msg','s:Store Updated Successfuly!');
     }
 
     /**
@@ -122,14 +104,10 @@ class StoreController extends Controller
      */
     public function destroy($id)
     {
-        $item = Store::find($id);
-        if (!$item) {
-            Alert::error('Invalid ID', 'Error Message');
-        }
+        $item = Store::findOrFail($id);
         $item->delete();
-        // return a success message
-        Alert::success('Store Deleted Successfuly!', 'Success Message');
-        return redirect (route("store.index"));
+        return redirect()->route("store.index")->with('msg','s:Store Deleted Successfuly!');;
+
 
     }
 }

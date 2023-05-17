@@ -22,6 +22,9 @@ class Product extends Model
         'quantity',
         'images'
     ];
+    // const STATUS = ['active', 'inactive'];
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
 
     public function category(){
         return $this->belongsTo(category::class);

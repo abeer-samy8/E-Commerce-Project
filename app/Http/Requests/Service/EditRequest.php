@@ -24,7 +24,6 @@ class EditRequest extends FormRequest
         return [
             'title'=>'required|max:100',
             'summary'=>'required|max:255',
-            'active'=>'max:1',
             'image'=>'image'
         ];
     }

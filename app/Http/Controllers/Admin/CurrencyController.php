@@ -21,7 +21,6 @@ class CurrencyController extends Controller
         $q=$request->q;
         $items=Currency::whereRaw("true");
 
-
         if($q)
         {
             $items->whereRaw('(name like ? )',["%$q%"]);
@@ -57,8 +56,8 @@ class CurrencyController extends Controller
     {
         $data=$request->all();
         Currency::create($data);
-        Alert::success('Currency added successfully!', 'Success Message');
-        return redirect (route("currency.index"));
+        return redirect()->route("currency.index")->with('msg','Currency added successfully!');
+
 
     }
 
@@ -81,13 +80,7 @@ class CurrencyController extends Controller
      */
     public function edit($id)
     {
-        $item= Currency::find($id);
-        if(!$item)
-        {
-            Alert::error('Invalid ID', 'Error Message');
-            return redirect(route("currency.index"));
-
-        }
+        $item= Currency::findOrFail($id);
         return view("admin.currency.edit",compact('item'));
     }
 
@@ -102,13 +95,8 @@ class CurrencyController extends Controller
     {
         $item=Currency::find($id);
         $data=$request->all();
-
         $item->update($data);
-
-        Alert::success('Currency Updated Successfuly!', 'Success Message');
-
-        return redirect (route("currency.index"));
-
+        return redirect()->route("currency.index")->with('msg','Currency Updated successfully!');
     }
 
     /**
@@ -119,14 +107,8 @@ class CurrencyController extends Controller
      */
     public function destroy($id)
     {
-        if (!$item) {
-            Alert::error('Invalid ID', 'Error Message');
-
-        }
+        $item=Currency::findOrFail($id);
         $item->delete();
-        // return a success message
-        Alert::success('Currency Deleted Successfuly!', 'Success Message');
-        return redirect (route("currency.index"));
-
+        return redirect()->route("currency.index")->with('msg','Currency Deleted successfully!');
     }
 }

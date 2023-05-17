@@ -17,18 +17,20 @@
                         placeholder="Search Here..." />
                 </div>
                 <div class='col-3'>
-                <select name='order_status_id' id='order_status_id' class='form-control '>
+                    <select name='order_status' id='order_status' class='form-control'>
                         <option value=''>Order Status</option>
-                        @foreach($status as $statu)
-            <option value="{{$statu->id}}" {{request()->order_status_id==$statu->id ? "selected":"" }}>{{$statu->name}}</option>
-            @endforeach
+                        @foreach($status as $key => $value)
+                            <option value='{{ $key }}' {{ request()->order_status == $key ? "selected" : "" }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class='col-3'>
                     <input type="submit" class='btn btn-primary mr-2' value='Search' />
                     <input type="submit" class='btn btn-secondary' value='Clear'
-                        onclick="document.getElementById('id').value = ''; document.getElementById('q').value = ''; document.getElementById('order_status_id').value = ''; return true;" />
+                        onclick="document.getElementById('id').value = ''; document.getElementById('q').value = ''; document.getElementById('order_status').value = ''; return true;" />
                 </div>
             </div>
         </form>
@@ -64,8 +66,20 @@
                                 <td>{{ $order->phone }}</td>
                                 <td>{{ $order->city }}</td>
                                 <td>{{ $order->address }}</td>
-                                <td>{{$order->orderStatus->name??''}}</td>
-                                <td>{{ $order->total_price }}</td>
+                                <td>
+                                    @if ($order->order_status == \App\Models\Order::STATUS_NEW)
+                                        New
+                                    @elseif ($order->order_status == \App\Models\Order::STATUS_IN_PROGRESS)
+                                        In progress
+                                    @elseif ($order->order_status == \App\Models\Order::STATUS_SENDED)
+                                        Sended
+                                    @elseif ($order->order_status == \App\Models\Order::STATUS_DELIVERED)
+                                        Delivered
+                                    @elseif ($order->order_status == \App\Models\Order::STATUS_CANCELED)
+                                        Canceled
+                                    @endif
+                                </td>
+                                                                <td>{{ $order->total_price }}</td>
                                 <td>{{ $order->total_items}}</td>
                                 <td>{{ $order->created_at }}</td>
                                 <td>

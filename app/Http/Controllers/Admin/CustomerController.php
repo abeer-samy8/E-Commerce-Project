@@ -7,7 +7,6 @@ use Session;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
-use Spatie\Permission\Models\Role;
 
 
 class CustomerController extends Controller
@@ -20,14 +19,18 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $q = $request->q;
-        $items = Customer::join("users","user_id","users.id")
-            ->where('email','like',"%$q%")
-            ->orWhere('name','like',"%$q%")
-            ->select("customers.*","users.name","users.email")
+
+        $items = Customer::with('user')
+            ->whereHas('user', function ($query) use ($q) {
+                $query->where('email', 'like', "%$q%")
+                    ->orWhere('name', 'like', "%$q%");
+            })
             ->paginate(10)
-            ->appends(['q'=>$q]);
-        return view("admin.customer.index")->with('items',$items);
-        
+            ->appends(['q' => $q]);
+
+        return view("admin.customer.index")->with('items', $items);
+
+
 
 
 
@@ -35,14 +38,7 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-    $item = Customer::find($id);
-        if(!$item){
-            Alert::warning('Invalid ID', 'Warning Message');
-
-            return redirect(route("customer.index"));
-        }
-        // $users = User::get();
-        // return view("customer.show",compact('item','users'))->with("item",$item);
+        $item = Customer::findOrFail($id);
         return view("admin.customer.show",compact('item'));
     }
 
@@ -54,15 +50,11 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $itemDB = Customer::find($id);
-        if($itemDB->orders->count()>0){
-            Alert::error('The customer cannot be deleted because he has orders.', 'Error Message');
-
-            return redirect(route("customer.index"));
-        }
+        $itemDB = Customer::findOrFail($id);
         $itemDB->delete();
-        Alert::success('Deleted Successfuly!', 'Success Message');
+        return redirect()->route("customer.index")->with('msg','Customer Deleted successfully!');
 
-        return redirect(route("customer.index"));
+
     }
+
 }

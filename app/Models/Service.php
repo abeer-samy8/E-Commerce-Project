@@ -12,6 +12,8 @@ class Service extends Model
         'title',
         'summary',
         'image',
-        'active'
+        'status'
     ];
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
 }

@@ -11,67 +11,80 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
-    function index(Request $request){
-        $q = $request->q;
-        $id = $request->id;
-        $order_status_id = request()->order_status_id;
+    function index(Request $request)
+{
+    $q = $request->q;
+    $id = $request->id;
+    $order_status = $request->order_status; // تغيير اسم المتغير إلى order_status
 
-        $query = Order::whereRaw('true');
+    $query = Order::whereRaw('true');
 
-        if($order_status_id){
-            $query->where('order_status_id',$order_status_id);
-        }
+    if ($order_status) {
+        $query->where('order_status', $order_status); // تحديث اسم الحقل إلى order_status
+    }
 
-        if($id){
-            $query->where('id',$id);
-        }
+    if ($id) {
+        $query->where('id', $id);
+    }
 
-        if($q){
-            $query->whereRaw('(name like ? or address like ?)',["%$q%","%$q%"]);
-        }
+    if ($q) {
+        $query->whereRaw('(name like ? or address like ?)', ["%$q%", "%$q%"]);
+    }
 
-
-        $orders = $query->orderBy('id','desc')->paginate(8)
+    $orders = $query->orderBy('id', 'desc')->paginate(8)
         ->appends([
-            'q'     =>$q,
-            'id'     =>$id,
-            'order_status_id'=>$order_status_id,
+            'q' => $q,
+            'id' => $id,
+            'order_status' => $order_status, // تحديث اسم المتغير هنا أيضًا
         ]);
-        $status=OrderStatus::all();
-        return view("admin.order.index",compact('orders','status'));
-    }
 
-    public function show($id)
-    {
-        $order = Order::find($id);
-        if(!$order){
-            session()->flash("msg","w:Invalid Id");
-            return redirect(route("order.index"));
-        }
-        $orderStatuses = \App\Models\OrderStatus::all();
-        return view("admin.order.show",compact('order','orderStatuses'));
-    }
+    $status = [
+        'STATUS_NEW' => 'New',
+        'STATUS_IN_PROGRESS' => 'In progress',
+        'STATUS_SENDED' => 'Sended',
+        'STATUS_DELIVERED' => 'Delivered',
+        'STATUS_CANCELED' => 'Canceled'
+    ]; // تعريف حالات الطلب كمصفوفة مفتاح/قيمة بدلاً من النمط الثابت السابق
+
+    return view("admin.order.index", compact('orders', 'status'));
+}
+
+
+
+public function show($id)
+{
+    $order = Order::findOrFail($id);
+    $orderStatuses = [
+        Order::STATUS_NEW => 'New',
+        Order::STATUS_IN_PROGRESS => 'In progress',
+        Order::STATUS_SENDED => 'Sended',
+        Order::STATUS_DELIVERED => 'Delivered',
+        Order::STATUS_CANCELED => 'Canceled',
+    ];
+
+    return view("admin.order.show",compact('order','orderStatuses'));
+}
+
+
     public function destroy($id)
     {
-        $itemDB=Order::find($id);
+        $itemDB=Order::findOrFail($id);
         $itemDB->delete();
-        Alert::success('Order deleted successfully!', 'Success Message');
+        return redirect()->route("order.index")->with('msg','Order Deleted successfully!');
 
-        return redirect(route("order.index"));
     }
 
 
     public function updateStatus ($id, Request $request)
     {
         $status = $request->status;
-        $itemDB=Order::find($id);
-        if($itemDB){
-            $itemDB->order_status_id = $status;
+        $itemDB = Order::find($id);
+        if ($itemDB) {
+            $itemDB->order_status = $status;
             $itemDB->save();
         }
-        Alert::success('Status updated successfully!', 'Success Message');
+        return redirect()->route("order.index")->with('msg','Status updated successfully!');
 
-        return redirect(asset("admin/order/$id"));
     }
 
 }

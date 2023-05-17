@@ -9,7 +9,6 @@ use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\BillingDetails;
 use App\Jobs\InformNewOrder;
-use Spatie\Permission\Models\Role;
 use App\Mail\OrderDetails as MailOrderDetails;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
@@ -54,7 +53,7 @@ class CartController extends Controller
                 $user = auth()->user();
                 $orderData = [
                     'customer_id' => $user->id,
-                    'order_status_id' => 1,
+                    'order_status' => Order::STATUS_NEW,
                     'total_price' => $totalPrice,
                     'total_items' => count($request->id),
                     'name' => $user->name,
@@ -65,6 +64,7 @@ class CartController extends Controller
                     'city' => $user->customer->city ?? '',
                     'address' => $user->customer->address ?? '',
                 ];
+
                 $orderDetailsData = [];
                 for ($i = 0; $i < count($request->id); $i++) {
                     $productId = $request->id[$i];

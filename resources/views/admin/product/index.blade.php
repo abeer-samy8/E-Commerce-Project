@@ -30,7 +30,6 @@
                 $(this).next().show();
 
                 $.get('/admin/product/'+id+'/activate',function(){
-                    // alert("Updated successfully")
                     $(cb).next().hide();
                     $(cb).show();
                 })
@@ -126,7 +125,9 @@
                                 <td>{{ $product->currency->symbol ?? '' }}{{ $product->sale_price ?? 0 }}</td>
 
                                 <td>{{ $product->quantity }}</td>
-                                <td align="center"><input value="{{ $product->id }}" type="checkbox" class="cbActive" {{ $product->status == 'active' ? 'checked' : '' }} /></td>
+                                <td align="center">
+                                    <input value="{{ $product->id }}" type="checkbox" class="cbActive" {{ $product->status === \App\Models\Product::STATUS_ACTIVE ? 'checked' : '' }} />
+                                </td>
                                 </td>
                                 <td><img height=50 width= 50 src='{{asset("storage/assets/img/{$product->main_image}")}}' alt=""></td>
                                 <td width="15%">

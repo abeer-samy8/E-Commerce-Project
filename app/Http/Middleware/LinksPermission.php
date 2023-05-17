@@ -31,7 +31,8 @@ class LinksPermission
             //اذا لا يملك الأخ
             if(!$isUserHaveAccessToLink){
                 //الله يساهل عليه
-                return redirect(route('no-permission'));
+                return redirect()->route("home")->with('msg','e:Sorry, you do not have validity on the requested link.');;
+
             }
         }
         return $next($request);//وظيفة النيكست هان عادة في اكتر من ميدل وير بيشتغل وهان وظيفتها تقوله خلصت هاد الميدل وي روح ع اللي بعده

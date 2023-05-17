@@ -24,11 +24,11 @@
                         <label class="col-lg-3 col-form-label">Active / Inactive</label>
                         <div class="m-radio-inline col-lg-6">
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{ $item->status === \App\Models\Category::STATUS[0] ? 'checked' : '' }} type="radio" name="status" value="active"> Active
+                                <input {{ $item->status === \App\Models\Category::STATUS_ACTIVE ? 'checked' : '' }} type="radio" name="status" value="active"> Active
                                 <span></span>
                             </label>
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{ $item->status === \App\Models\Category::STATUS[1] ? 'checked' : '' }} type="radio" name="status" value="inactive"> Inactive
+                                <input {{ $item->status === \App\Models\Category::STATUS_INACTIVE ? 'checked' : '' }} type="radio" name="status" value="inactive"> Inactive
                                 <span></span>
                             </label>
                         </div>

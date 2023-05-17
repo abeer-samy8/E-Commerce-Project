@@ -22,7 +22,7 @@
         </div>
         <div class="col m--align-left m-login__form-left">
             @if (Route::has('password.request'))
-            <a href="{{ route('password.request') }}" id="m_login_forget_password" class="m-link">Forget password?</a>
+            <a href="{{ asset('/forgot-password') }}" id="m_login_forget_password" class="m-link">Forget password?</a>
             @endif
 
         </div>

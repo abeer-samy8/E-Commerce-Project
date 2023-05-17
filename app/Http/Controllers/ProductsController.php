@@ -12,23 +12,27 @@ class ProductsController extends Controller
 {
     function index(Request $request){
         $q = $request->q;
-        $query = Product::where('status', 'active');
-        if($q){
-        $query->whereRaw('(title like ? or slug like ? or details like ? )',["%$q%","%$q%","%$q%"]);
-        }
-        $products = $query->paginate(6)
-        ->appends([
-            'q'     =>$q
-        ]);
-        return view("products.index",compact('products'));
-    }
+        $status = Product::STATUS_ACTIVE;
+        $query = Product::where('status', $status);
 
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $products = Product::where('title', 'LIKE', '%'.$query.'%')->get();
-        return view('products.index', ['products' => $products]);
-    }
+        if ($q) {
+            $query->whereRaw('(title LIKE ? OR slug LIKE ? OR details LIKE ?)', ["%$q%", "%$q%", "%$q%"]);
+        }
+
+        $products = $query->paginate(6)->appends([
+            'q' => $q
+        ]);
+
+        return view("products.index", compact('products'));
+        }
+
+        public function search(Request $request)
+        {
+            $query = $request->input('query');
+            $status = Product::STATUS_ACTIVE;
+            $products = Product::where('title', 'LIKE', '%' . $query . '%')->where('status', $status)->get();
+            return view('products.index', ['products' => $products]);
+        }
 
 
     public function categoryProducts($id){
@@ -42,8 +46,9 @@ class ProductsController extends Controller
 {
     $q = $request->q;
     $categoryId = $request->category;
-    $query = Product::where('status', 'active');
-    if ($q) {
+    $status = Product::STATUS_ACTIVE;
+    $query = Product::where('status', $status);
+        if ($q) {
         $query->whereRaw('(title like ? or slug like ? or details like ? )', ["%$q%", "%$q%", "%$q%"]);
     }
     if ($categoryId) {
@@ -74,8 +79,8 @@ public function storeProducts($id){
 public function stores(Request $request)
 {
 $storeId = $request->store;
-$query = Product::where('status', 'active');
-
+$status = Product::STATUS_ACTIVE;
+$query = Product::where('status', $status);
 if ($storeId) {
     $query->where('store_id', $storeId);
 }
@@ -96,17 +101,20 @@ return view("products.stores", compact('products', 'stores'));
 
     public function details($slug)
     {
-        $product=Product::where ('products.slug',$slug)
-        ->where('status', 'active')
-        ->first();
-        if(!$product){
-            session()->flash("msg","e: الرابط المطلوب غير موجود");
-            return redirect(asset('products'));
-        }
-        return view('products.details',compact('product'));
-    }
+        $product = Product::where('products.slug', $slug)
+    ->where('status', Product::STATUS_ACTIVE)
+    ->first();
+
+if (!$product) {
+    session()->flash("msg", "e: الرابط المطلوب غير موجود");
+    return redirect(asset('products'));
+}
+
+return view('products.details', compact('product'));
 
 
 
 
+
+}
 }

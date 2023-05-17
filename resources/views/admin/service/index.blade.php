@@ -28,16 +28,17 @@
 
 
                 <div class='col-2'>
-                    <select name='active' id='active' class='select2 form-control'>
-                        <option value=''>Status</option>
-                        <option {{ request()->active=='1'?"selected":"" }} value='1'>Active</option>
-                        <option {{ request()->active=='0'?"selected":"" }} value='0'>Inactive</option>
-                    </select>
-                </div>
+                <select name='status' id='status' class='select2 form-control'>
+                    <option value=''>Status</option>
+                    <option {{ request()->status == \App\Models\Service::STATUS_ACTIVE ? "selected" : "" }} value='{{ \App\Models\Service::STATUS_ACTIVE }}'>Active</option>
+                    <option {{ request()->status == \App\Models\Service::STATUS_INACTIVE ? "selected" : "" }} value='{{ \App\Models\Service::STATUS_INACTIVE }}'>Inactive</option>
+                </select>
+            </div>
+
                 <div class='col-4'>
                     <input type="submit" class='btn btn-primary mr-2' value='Search' />
                     <input type="submit" class='btn btn-secondary' value='Clear search'
-                        onclick="document.getElementById('q').value = ''; document.getElementById('category').value = ''; document.getElementById('store').value = ''; document.getElementById('active').value = ''; return true;" />
+                        onclick="document.getElementById('q').value = ''; document.getElementById('category').value = ''; document.getElementById('store').value = ''; document.getElementById('status').value = ''; return true;" />
                 </div>
 
             </div>
@@ -76,10 +77,10 @@
                                 </td>
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->summary }}</td>
-                                <td>{{ $item->active }}</td>
+                                <td>{{ $item->status == \App\Models\Service::STATUS_ACTIVE ? 'Active' : 'Inactive' }}</td>
                                 <td><img style="width: 100px;" src="{{asset('storage/images/'.$item->image)}}"/>
                                 <div class="m-spinner"></div>
-                                </td>
+                                </td>   
                                 <td width="15%">
 
                                     <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"

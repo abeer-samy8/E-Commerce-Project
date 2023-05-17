@@ -68,7 +68,7 @@
                                     </label>
                                 </td>
                                 <td>{{$item->name}}</td>
-                                <td>{{ $item->status === \App\Models\Category::STATUS[0] ? 'Active' : 'Inactive' }}</td>
+                                <td>{{ $item->status === \App\Models\Category::STATUS_ACTIVE ? 'Active' : 'Inactive' }}</td>
                                 <td>{{$item->updated_at}}</td>
                                 <td>
                                     <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"

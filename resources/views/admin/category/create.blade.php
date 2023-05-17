@@ -23,11 +23,11 @@
                         <label class=" col-lg-3 col-form-label">Active / Inactive</label>
                         <div class="m-radio-inline col-lg-6">
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{ old('active') === '1' ? 'checked' : '' }} type="radio" name="status" value="active" aria-describedby="account_group-error"> Active
+                                <input {{ old('status') === 'acctive' ? 'checked' : '' }} type="radio" name="status" value="active" aria-describedby="account_group-error" checked=""> Active
                                 <span></span>
                             </label>
                             <label class="m-radio m-radio--solid m-radio--brand">
-                                <input {{ old('active') === '0' ? 'checked' : '' }} type="radio" name="status" value="inactive"> Inactive
+                                <input {{ old('status') === 'inactive' ? 'checked' : '' }} type="radio" name="status" value="inactive"> Inactive
                                 <span></span>
                             </label>
                         </div>

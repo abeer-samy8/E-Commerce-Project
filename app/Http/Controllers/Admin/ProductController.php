@@ -28,18 +28,20 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 //this function for status checkbox
-    public function activate($id){
-        //sleep(3);
-        $item = Product::find($id);
-        if ($item) {
-            $newStatus = ($item->status === 'active') ? 'inactive' : 'active';
-            $item->status = $newStatus;
-            $item->save();
-            return response()->json(['status' => 1, 'msg' => 'Updated successfully']);
-        }
-        return response()->json(['status' => 0, 'msg' => 'Invalid ID']);
 
+
+public function activate($id)
+{
+    $item = Product::find($id);
+    if ($item) {
+        $newStatus = ($item->status === \App\Models\Product::STATUS_ACTIVE) ? \App\Models\Product::STATUS_INACTIVE : \App\Models\YourModel::STATUS_ACTIVE;
+        $item->status = $newStatus;
+        $item->save();
+        return response()->json(['status' => 1, 'msg' => 'Updated successfully']);
     }
+    return response()->json(['status' => 0, 'msg' => 'Invalid ID']);
+}
+
 
 
     public function index(Request $request)
@@ -135,7 +137,6 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = product::findOrFail($id);
-
         $categories = category::all();
         $stores = store::all();
         $currencies = currency::all();

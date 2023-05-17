@@ -11,9 +11,11 @@ class Category extends Model
         'name',
         'status'
     ];
-    
-    const STATUS = ['active', 'inactive'];
 
+    // const STATUS = ['active', 'inactive'];
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    
     public function products(){
         return $this->hasMany(product::class);
     }

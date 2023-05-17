@@ -17,10 +17,10 @@ class ServiceController extends Controller
     {
         $items =Service::all();
         $q = $request->q;
-        $active = $request->active;
+        $status = $request->status;
         $query = Service::where('id','>',0);
-        if($active!=''){
-            $query->where('active',$active);
+        if($status!=''){
+            $query->where('status',$status);
         }
 
         if($q){
@@ -30,7 +30,7 @@ class ServiceController extends Controller
         $items = $query->paginate(3)
         ->appends([
             'q'     =>$q,
-            'active'=>$active
+            'status'=>$status
             ]);
         return view("admin.service.index",compact('items'));
     }
@@ -42,8 +42,8 @@ class ServiceController extends Controller
 //------------------------------------------------------------------
     public function store(CreateRequest $request)
     {
-        if(!isset($request['active'])){
-            $request['active'] = 0;
+        if(!isset($request['status'])){
+            $request['status'] = Service::STATUS_INACTIVE;
         }
 
         $requestData = $request->all();
@@ -53,31 +53,23 @@ class ServiceController extends Controller
             $requestData['image'] = $imageName;
         }
         Service::create($requestData);
-        Alert::success('Service added successfully!', 'Success Message');
 
-        return redirect(route("service.index"));
+        return redirect()->route("service.index")->with('msg', 'Service added successfully!');
+
+
     }
     //-----------------------------------------------------------
     public function show($id)
     {
-       $item = Service::find($id);
-        if(!$item){
-            session()->flash("msg","w:غير فعّال ");
-            Alert::warning('Inactive', 'Warning Message');
-
-            return redirect(route("service.index"));
-        }
+        $item = Service::findOrFail($id);
         return view("admin.service.show",compact('item'));
     }
     //---------------------------------------------------------------
     public function edit($id)
     {
-        $item = Service::find($id);
-        if(!$item){
-            Alert::warning('Inactive', 'Warning Message');
-            return redirect(route("service.index"));
-        }
-         return view("admin.service.edit")->with('item',$item);
+        $item = Service::findOrFail($id);
+
+        return view("admin.service.edit")->with('item',$item);
     }
 //--------------------------------------------------------------------
 public function update(EditRequest $request, $id)
@@ -89,17 +81,20 @@ public function update(EditRequest $request, $id)
         $imageName = $request->image->hashName();
         $requestData['image'] = $imageName;
     }
+    if ($request->status === Service::STATUS_ACTIVE) {
+        $requestData['status'] = Service::STATUS_ACTIVE;
+    } else {
+        $requestData['status'] = Service::STATUS_INACTIVE;
+    }
     $itemDB->update($requestData);
+    return redirect()->route("service.index")->with('msg', 'Service updated successfully!');
 
-    Alert::success('Service updated successfully!', 'Success Message');
-    return redirect(route("service.index"));
 }
 //--------------------------------------------------------------------
 public function destroy($id)
 {
-    $itemDB = Service::find($id);
+    $itemDB = Service::findOrFail($id);
     $itemDB->delete();
-    Alert::success('Service deleted successfully!', 'Success Message');
-    return redirect(route("service.index"));
+    return redirect()->route("service.index")->with('msg', 'Service deleted successfully!');
 }
 }

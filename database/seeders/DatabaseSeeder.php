@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Newsletter::factory(10)->create();
         // $this->call(NewsletterSeeder::class);
 
-        $this->call(OrderStatusSeeder::class);
-        $this->call(RolesSeeder::class);
-        $this->call(NewsletterSeeder::class);
-        $this->call(LinksSeeder::class);
+        // $this->call(NewsletterSeeder::class);
+        // $this->call(LinksSeeder::class);
+        $this->call(UsersTableSeeder::class);
+
 
 
 

@@ -108,10 +108,10 @@ class CategoryController extends Controller
     {
         $item = Category::find($id);
         $data = $request->all();
-        if ($request->status === Category::STATUS[0]) {
-            $data['status'] = Category::STATUS[0];
+        if ($request->status === Category::STATUS_ACTIVE) {
+            $data['status'] = Category::STATUS_ACTIVE;
         } else {
-            $data['status'] = Category::STATUS[1];
+            $data['status'] = Category::STATUS_INACTIVE;
         }
         $item->update($data);
         return redirect()->route("category.index")->with('msg', 'Category Updated Successfully!');
@@ -130,7 +130,6 @@ class CategoryController extends Controller
     {
         $item = Category::findOrFail($id);
         $item->delete();
-        session()->flash('msg','s:Category Deleted Successfully!');
         return redirect()->route("category.index")->with('msg','s:Category Deleted Successfully!');
 
 
