@@ -16,13 +16,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $q = $request->q;
-        $items = User::where('role', User::ROLE_ADMIN)
-                    ->where(function($query) use ($q) {
+        $items = User::where('role', User::ROLE_ADMIN)->where(function($query) use ($q) {
                         $query->where('email', 'like', "%$q%")
                             ->orWhere('name', 'like', "%$q%");
-                    })
-                    ->paginate(10)
-                    ->appends(['q' => $q]);
+                    })->paginate(10)->appends(['q' => $q]);
 
         return view("admin.user.index")->with('items', $items);
 

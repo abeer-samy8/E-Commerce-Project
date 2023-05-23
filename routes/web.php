@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\SendMailController;
 
 
 use App\Http\Controllers\HomeController as FrontHomeController;
@@ -40,9 +41,19 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',[FrontHomeController::class,'index']);
+
+Route::get('/send_emails', [SendMailController::class, 'form'])->name('send_emails_form');
+Route::post('/send_emails', [SendMailController::class, 'send_emails'])->name('send_emails');
+
+
+
 Route::get('/page/{slug}',[FrontHomeController::class,'Page']);
+
+
 Route::get('/contact-us', [ContactController::class,'contact']);
-Route::post('/contact-us', [ContactController::class,'contactus']);
+Route::post('/contact-us', [ContactController::class,'contactus'])->name('contactus');
+
+
 Route::get('/stores',[FrontHomeController::class,'stores']);
 Route::get('/categories',[FrontHomeController::class,'categories']);
 Route::get('/sales',[FrontHomeController::class,'sales']);
@@ -57,8 +68,6 @@ Route::get('/products/remove-from-cart/{id}', [CartController::class,'removeFrom
 Route::get('/checkout', [CartController::class,'check']);
 Route::post('/checkout', [CartController::class,'checkout'])->name('checkout');
 
-// Route::get('/checkout', 'CartController@check');
-// Route::post('/checkout', 'CartController@checkout')->name('checkout');
 
 Route::get('/thankyou', [CartController::class,'thankyou']);
 Route::get('/search', [ProductsHomeController::class,'search'])->name('products.search');
@@ -91,8 +100,15 @@ require __DIR__.'/auth.php';
 Route::prefix("admin")->middleware(['auth','role:admin','links.permissions'])->group(function(){
     Route::get("/",[HomeController::class,'index'])->name("home");
 
-    Route::resource("category",CategoryController::class);
-    Route::get("category/{id}/delete",[CategoryController::class,'destroy'])->name("category.delete");
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
+    Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::patch('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete("category/delete/{id}",[CategoryController::class,'destroy'])->name("category.delete");
+
+
 
     Route::get("product/{id}/activate",[ProductController::class,'activate'])->name("products.activate");
     Route::resource("product",ProductController::class);

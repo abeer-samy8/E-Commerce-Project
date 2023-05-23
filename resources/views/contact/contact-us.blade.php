@@ -34,13 +34,9 @@
 		<!-- Start Contact Form -->
 		<div class="untree_co-section">
       <div class="container">
-
         <div class="block">
           <div class="row justify-content-center">
-
             <div class="col-md-8 col-lg-8 pb-4">
-
-
               <div class="row mb-5">
                 <div class="col-lg-4">
                   <div  class="service no-shadow align-items-center link horizontal d-flex active" data-aos="fade-left" data-aos-delay="0">
@@ -81,11 +77,7 @@
                   </div> <!-- /.service -->
                 </div>
               </div>
-
-
-
-
-                        <form enctype='multipart/form-data' method='post'>
+              <form id="contactForm" enctype="multipart/form-data" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-6">
@@ -114,8 +106,8 @@
 
 
                                 <div class="col-sm-12 text-center" style= 'padding: 20px'>
-                                    <button type="submit" class="btn btn-template-outlined"><i
-                                            class="fa fa-envelope-o"></i>  Send Message</button>
+                                <button type="submit" class="btn btn-template-outlined"><i class="fa fa-envelope-o"></i> Send Message</button>
+
                                 </div>
                             </div>
                         </form>
@@ -138,3 +130,80 @@
 
 
 @endsection
+
+@section('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script>
+$(document).ready(function() {
+  $('#contact-form').submit(function(event) {
+    event.preventDefault();
+
+    // var formData = {
+    //   firstname: $('#firstname').val(),
+    //   lastname: $('#lastname').val(),
+    //   email: $('#email').val(),
+    //   message: $('#message').val()
+    // };
+
+    var formData = form.serialize();
+    dd('d');
+
+    $.post('/contactus', formData, function(response) {
+      // Handle the response from the server
+      console.log('response');
+    });
+  });
+});
+</script> -->
+<!-- <script>
+$(function() {
+    // Target the form by its ID
+    var form = $("#contactForm");
+    form.submit(function(event) {
+        event.preventDefault();
+        // Serialize the form data
+        var formData = form.serialize();
+        // Send the AJAX POST request
+        $.post("/contact-us", formData)
+            .done(function(response) {
+                console.log('Sended Success');
+                // Reset the form
+                form[0].reset();
+            })
+            .fail(function(error) {
+                // Handle the error case
+                console.error(error);
+                // Optionally, you can show an error message or perform other actions
+            });
+    });
+});
+</script> -->
+
+<script>
+    $('form').submit(function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(this);
+    var form = this;
+    
+    $.ajax({
+        url: '/contact-us',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            alert(response.msg);
+            form.reset();
+        },
+        error: function(xhr, status, error) {
+
+            console.log(xhr.responseText);
+        }
+    });
+});
+</script>
+
+
+@endsection
+

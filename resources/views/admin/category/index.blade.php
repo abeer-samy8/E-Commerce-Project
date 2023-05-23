@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                             @foreach($items as $item)
-                            <tr role="row" class="odd">
+                            <tr role="row" class="odd" id="cid{{$item->id}}">
                                 <td >
                                     <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
                                         <input type="checkbox" value="" class="m-checkable">
@@ -77,10 +77,11 @@
                                     <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"
                                         href="{{route('category.edit',$item->id)}}" title="Edit"><i
                                             class="la la-edit"></i> </a>
-                                            <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only"
-                                        href="{{route('category.delete',$item->id)}}"
-                                        onclick="return confirm('Are you sure to  delete{{$item->name}} ?')" title="delete"><i
-                                            class="la la-remove"></i> </a>
+
+
+                                    <a class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only delete-category"
+                                    id="{{$item->id}}" title="delete"><i class="la la-remove"></i></a>
+
 
                                 </td>
                             </tr>
@@ -98,4 +99,38 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+$(document).ready(function() {
+    $('.delete-category').click(function(e) {
+        e.preventDefault();
+
+        if (!confirm("Are you sure you want to delete this category?")) {
+            return false;
+        }
+
+        var itemId = $(this).attr('id');
+
+        $.ajax({
+            url: 'category/delete/' + itemId,
+            type: 'DELETE',
+            data: {
+            "_token": "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                alert('Category deleted successfully!');
+                window.location.reload(); // Refresh the page
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred while deleting the category.');
+            }
+        });
+    });
+});
+</script>
+
+
+
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\BillingDetails;
@@ -12,10 +13,9 @@ use App\Jobs\InformNewOrder;
 use App\Mail\OrderDetails as MailOrderDetails;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
-
-
+use App\Notifications\NewCustomerOrder;
+use App\Mail\NewOrderNotification;
 class CartController extends Controller
 {
 
@@ -105,6 +105,9 @@ class CartController extends Controller
 
         return back();
     }
+
+
+
     public function removeFromCart($id){
         $cartItems = json_decode(request()->cookie('cart'),true)??[];
         unset($cartItems[$id]);
@@ -137,11 +140,25 @@ class CartController extends Controller
             session()->forget(['orderData', 'orderDetailsData']);
 
             Cookie::queue('cart', '', 60*24*14);
+
+            $order = $request->all();
+
+            // Mail::to('admin@aa.net')->send(new NewOrderNotification($order));
+
+
+
+                $admins = User::where('role', 'admin')->get();
+                foreach ($admins as $admin) {
+                    $adminEmail = $admin->email;
+                    Mail::to($adminEmail)->send(new NewOrderNotification($order));
+                }
+
             return redirect('thankyou');
     }
 
     public function thankyou(){
         return view("products.thankyou");
     }
+
 
 }

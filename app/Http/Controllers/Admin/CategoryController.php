@@ -130,10 +130,10 @@ class CategoryController extends Controller
     {
         $item = Category::findOrFail($id);
         $item->delete();
-        return redirect()->route("category.index")->with('msg','s:Category Deleted Successfully!');
 
-
-
+        return response()->json([
+            'success' => 'Category Deleted Successfully!'
+        ]);
     }
 
 

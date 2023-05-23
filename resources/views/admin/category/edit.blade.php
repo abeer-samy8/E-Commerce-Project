@@ -5,9 +5,8 @@
 
 @section("content")
 <div class="m-portlet m-portlet--mobile">
-    <form method="post" action="{{asset('admin/category/'.$item->id)}}">
+<form method="post" action="{{asset('admin/category/'.$item->id)}}" data-record-id="{{$item->id}}">
         @csrf
-        @method("put")
         <div class='m-form'>
             <div class="m-portlet__body">
                 <div class="m-form__section m-form__section--first">
@@ -59,4 +58,32 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('js')
+<script>
+$('form').submit(function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    var form = $(this);
+    var recordId = form.data('record-id'); // Retrieve the record ID from the form data attribute
+    var data = form.serialize(); // Serialize the form data
+
+    $.ajax({
+        url: form.attr('action'),
+        type: 'PATCH',
+        data: data,
+        success: function(response) {
+            // Handle the response from the server
+            console.log(response);
+            // Perform any necessary UI updates or display success message
+        },
+        error: function(xhr) {
+            // Handle any errors that occur
+            console.log(xhr.responseText);
+            // Display error message or handle errors accordingly
+        }
+    });
+});
+</script>
 @endsection

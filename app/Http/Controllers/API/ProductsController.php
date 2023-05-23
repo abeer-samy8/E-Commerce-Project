@@ -12,8 +12,8 @@ class ProductsController extends Controller
     function search(Request $request){
         $q = $request->q;
         $category=$request->category;
-        $query = product::whereRaw('active=1');
-        if($q){
+        $status = Product::STATUS_ACTIVE;
+        $query = Product::where('status', $status);        if($q){
             $query->whereRaw('(title like ? or slug like ? or details like ? )',["%$q%","%$q%","%$q%"]);
         }
         if($category){
@@ -27,7 +27,7 @@ class ProductsController extends Controller
 
         return $products;
     }
-    
+
     function details($id){
         $item = Product::find($id);
         if(!$item){
